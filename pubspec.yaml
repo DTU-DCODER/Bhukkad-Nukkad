@@ -24,6 +24,10 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^5.0.0
+  line_awesome_flutter: ^1.0.1
+  flutter_screenutil: ^1.0.2
+  animated_theme_switcher: ^1.0.5
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -46,9 +50,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/vaibhav.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -80,13 +83,13 @@ flutter:
           weight: 400
     - family: QuickSand
       fonts:
-        - asset: assets/fonts/QuickSand-Bold.ttf
+        - asset: assets/fonts/Quicksand-Bold.ttf
           weight: 900
-        - asset: assets/fonts/QuickSand-Light.ttf
+        - asset: assets/fonts/Quicksand-Light.ttf
           weight: 300
-        - asset: assets/fonts/QuickSand-SemiBold.ttf
+        - asset: assets/fonts/Quicksand-SemiBold.ttf
           weight: 700
-        - asset: assets/fonts/QuickSand-Regular.ttf
+        - asset: assets/fonts/Quicksand-Regular.ttf
           weight: 400
     - family: SF-Pro
       fonts:
