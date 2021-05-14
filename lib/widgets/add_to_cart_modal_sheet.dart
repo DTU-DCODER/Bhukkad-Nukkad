@@ -23,18 +23,27 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
     final List<String> keys = widget.chosenMeal.getKeys();
     return Scaffold(
       key: ValueKey("ModalBottomSheetScaffold"),
-      body: Card(
+      body: Container(
+        height: height * 0.7,
+        padding: EdgeInsets.all(height * 0.01),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               widget.chosenMeal.title,
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1
+                  .copyWith(fontSize: height * 0.045),
             ),
             Divider(),
-            Text("Select any one option: "),
+            Text(
+              "Select any one option: ",
+              style: TextStyle(fontSize: height * 0.03),
+            ),
             SizedBox(height: height * 0.01),
             Container(
-              height: height * 0.35,
+              height: height * 0.32,
               padding: EdgeInsets.all(height * 0.01),
               child: ListView.builder(
                 itemCount: widget.chosenMeal.typesPrices.length,
@@ -43,21 +52,30 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(currentType,
-                          style: Theme.of(context).textTheme.bodyText1),
+                      Text(
+                        currentType,
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                              fontSize: height * 0.029,
+                            ),
+                      ),
                       Row(
                         children: [
                           Text(
-                              "₹" +
-                                  widget.chosenMeal.typesPrices[currentType]
-                                      .toString(),
-                              style: Theme.of(context).textTheme.subtitle1),
+                            "₹" +
+                                widget.chosenMeal.typesPrices[currentType]
+                                    .toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                .copyWith(fontSize: height * 0.018),
+                          ),
                           IconButton(
                             icon: Icon(
                               (_selectedIndex == index)
                                   ? Icons.radio_button_on
                                   : Icons.radio_button_off,
                               color: Theme.of(context).accentColor,
+                              size: height * 0.029,
                             ),
                             onPressed: () {
                               setState(() {
@@ -121,7 +139,8 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                   child: InkWell(
                     child: Text(
                       "ADD - ₹" +
-                          widget.chosenMeal.typesPrices[keys[_selectedIndex]]
+                          (widget.chosenMeal.typesPrices[keys[_selectedIndex]] *
+                                  widget.value)
                               .toString(),
                       style: TextStyle(
                         color: Colors.white,
