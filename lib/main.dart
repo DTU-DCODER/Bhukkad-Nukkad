@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screens/text_styles_screen.dart';
+import 'screens/canteen_meals_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   };
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: TextStylesScreen(),
+      home: CanteenMealsScreen(),
       theme: ThemeData(
         primarySwatch: MaterialColor(0xfff58f29, primarySwatchColorMap),
         primaryColor: Color.fromRGBO(245, 143, 41, 1),

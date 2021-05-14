@@ -12,13 +12,14 @@ List<Meal> canteenMealList = [
     "m2",
     "Kachori",
     14,
-    "https://lh3.googleusercontent.com/proxy/333qq0u9BJnlIlKfMIDa7n7Cc3opCGujNCIJ24OycPVjOwRSMSe8AdQRcW89o0RaiVr3ist4NWp-vrUI8tZjTFXXTRisLhPj9c3JY0GHjbtMDXDq-xoXJxB7NlyE40srKezQY6S3iWK6uWuLqiwamw",
+    "https://i.ndtvimg.com/i/2017-11/kachori_650x400_51510318031.jpg",
   ),
   Meal(
     "m3",
     "Paneer Kulcha",
     65,
     "https://s3-ap-south-1.amazonaws.com/betterbutterbucket-silver/anjali-valecha20181126182243587.jpg",
+    isAvailable: false,
   ),
   Meal(
     "m4",
@@ -140,7 +141,7 @@ List<Meal> micMacMeals = [
     "m10",
     "Soya Keema Paratha",
     78,
-    "http://www.premascook.com/wp-content/uploads/2015/09/Soya-keema-Paratha.jpg",
+    "https://s3-ap-south-1.amazonaws.com/betterbutterbucket-silver/reena-andavarapu20190210233031045.jpg",
   ),
 ];
 List<Meal> hpmcMeals = [
@@ -299,8 +300,15 @@ List<Meal> nescafeMeals = [
 ];
 
 List<Canteen> canteenList = [
-  Canteen(id: "c1", canteenName: "Canteen", meals: canteenMealList),
-  Canteen(id: "c2", canteenName: "Mic Mac", meals: micMacMeals),
-  Canteen(id: "c3", canteenName: "HPMC", meals: hpmcMeals),
-  Canteen(id: "c5", canteenName: "Nescafe", meals: nescafeMeals),
+  Canteen(id: "c1", canteenName: "Canteen", meals: canteenMealList), //13
+  Canteen(id: "c2", canteenName: "Mic Mac", meals: micMacMeals), //10
+  Canteen(id: "c3", canteenName: "HPMC", meals: hpmcMeals), //13
+  Canteen(id: "c4", canteenName: "Nescafe", meals: nescafeMeals), //12
 ];
+
+Map<String, List<String>> previousOrders = {
+  "c1": ["m1", "m3", "m5", "m6", "m11", "m12"],
+  "c2": ["m2", "m4", "m5"],
+  "c3": ["m1", "m2", "m4", "m8", "m10", "m13"],
+  "c4": [],
+};

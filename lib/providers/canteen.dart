@@ -8,7 +8,12 @@ class Canteen with ChangeNotifier {
   final List<Meal> meals;
   bool isOpen;
 
-  Canteen({this.id, this.canteenName, this.meals, this.isOpen = true});
+  Canteen({
+    @required this.id,
+    @required this.canteenName,
+    @required this.meals,
+    this.isOpen = true,
+  });
 
   void setClosed() {
     isOpen = false;
