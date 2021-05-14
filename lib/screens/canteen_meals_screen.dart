@@ -10,7 +10,7 @@ import '../providers/favorites.dart';
 import '../widgets/canteen_meal_tile.dart';
 
 class CanteenMealsScreen extends StatelessWidget {
-  final canteenId = "c3";
+  final canteenId = "c4";
   static const routeName = "/canteen-meals-screen";
   Widget buildTitle(BuildContext context, String text) {
     return Padding(
@@ -126,11 +126,12 @@ class CanteenMealsScreen extends StatelessWidget {
                         if (chosenMealIndex != -1) {
                           final Meal chosenMeal =
                               chosenCanteen.meals[chosenMealIndex];
-                          return PreviousOrderMealTile(
-                            id: chosenMeal.id,
-                            imageUrl: chosenMeal.imageUrl,
-                            price: chosenMeal.price,
-                            title: chosenMeal.title,
+                          return ChangeNotifierProvider.value(
+                            key: ValueKey("PreviousMeal" +
+                                canteenId.toString() +
+                                chosenMeal.id),
+                            value: chosenMeal,
+                            child: PreviousOrderMealTile(),
                           );
                         } else
                           return SizedBox(width: 0);
@@ -149,12 +150,12 @@ class CanteenMealsScreen extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     final Meal chosenMeal = chosenCanteen.meals[index];
                     if (chosenMeal.isAvailable)
-                      return CanteenMealTile(
-                        canteenId: canteenId,
-                        id: chosenMeal.id,
-                        imageUrl: chosenMeal.imageUrl,
-                        price: chosenMeal.price,
-                        title: chosenMeal.title,
+                      return ChangeNotifierProvider.value(
+                        key: ValueKey("CanteenMeal" +
+                            canteenId.toString() +
+                            chosenMeal.id),
+                        value: chosenMeal,
+                        child: CanteenMealTile(canteenId),
                       );
                     else
                       return SizedBox(height: 0);

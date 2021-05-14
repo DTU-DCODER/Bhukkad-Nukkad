@@ -2,22 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/favorites.dart';
+import '../providers/meal.dart';
+import '../widgets/add_to_cart_modal_sheet.dart';
 
 class CanteenMealTile extends StatefulWidget {
   final String canteenId;
-  final String id;
-  final String title;
-  final double price;
-  final String imageUrl;
-
-  CanteenMealTile({
-    @required this.canteenId,
-    @required this.id,
-    @required this.title,
-    @required this.price,
-    @required this.imageUrl,
-    //@required this.isFav,
-  });
+  CanteenMealTile(this.canteenId);
   @override
   _CanteenMealTileState createState() => _CanteenMealTileState();
 }
@@ -33,7 +23,8 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
         MediaQuery.of(context).padding.left -
         MediaQuery.of(context).padding.right;
     final favoritesData = Provider.of<Favorites>(context);
-    isFav = favoritesData.isFav(widget.canteenId, widget.id);
+    final chosenMeal = Provider.of<Meal>(context);
+    isFav = favoritesData.isFav(widget.canteenId, chosenMeal.id);
     return Container(
       padding: EdgeInsets.only(bottom: height * 0.01),
       height: height * 0.1465,
@@ -42,7 +33,7 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
         child: Row(
           children: [
             Image.network(
-              widget.imageUrl,
+              chosenMeal.imageUrl,
               height: double.infinity,
               width: width * 0.22,
               fit: BoxFit.cover,
@@ -55,13 +46,13 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    widget.title,
+                    chosenMeal.title,
                     softWrap: true,
                     style: TextStyle(fontSize: height * 0.023),
                   ),
                   FittedBox(
                     child: Text(
-                      "₹" + widget.price.toString(),
+                      "₹" + chosenMeal.price.toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: height * 0.02,
@@ -138,7 +129,30 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                     ),
                   ],
                 ),
-                onTap: () {},
+                onTap: () {
+                  if (chosenMeal.typesPrices != null) {
+                    showModalBottomSheet(
+                        context: context,
+                        isDismissible: true,
+                        builder: (context) =>
+                            AddToCartModalSheet(value, chosenMeal));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(value.toString() +
+                            " " +
+                            chosenMeal.title +
+                            " added to cart!"),
+                        duration: const Duration(milliseconds: 1500),
+                        width: MediaQuery.of(context).size.width - 80,
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    );
+                  }
+                },
               ),
             ),
             IconButton(
@@ -150,9 +164,9 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
               onPressed: () {
                 setState(() {
                   if (isFav)
-                    favoritesData.removeItem(widget.canteenId, widget.id);
+                    favoritesData.removeItem(widget.canteenId, chosenMeal.id);
                   else
-                    favoritesData.addItem(widget.canteenId, widget.id);
+                    favoritesData.addItem(widget.canteenId, chosenMeal.id);
                   isFav = !isFav;
                 });
               },

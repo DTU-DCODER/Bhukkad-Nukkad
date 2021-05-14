@@ -5,6 +5,7 @@ class Meal with ChangeNotifier {
   final String title;
   final double price;
   final String imageUrl;
+  final Map<String, int> typesPrices;
   bool isAvailable;
 
   Meal(
@@ -12,11 +13,16 @@ class Meal with ChangeNotifier {
     this.title,
     this.price,
     this.imageUrl, {
+    this.typesPrices,
     this.isAvailable = true,
   });
 
   void setUnavaiable() {
     isAvailable = false;
     notifyListeners();
+  }
+
+  List getKeys() {
+    return typesPrices.keys.toList();
   }
 }

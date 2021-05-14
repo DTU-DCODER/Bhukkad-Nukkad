@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import './add_to_cart_modal_sheet.dart';
+import '../providers/meal.dart';
 
 class PreviousOrderMealTile extends StatefulWidget {
-  final String id;
-  final String title;
-  final double price;
-  final String imageUrl;
-
-  PreviousOrderMealTile({
-    @required this.id,
-    @required this.title,
-    @required this.price,
-    @required this.imageUrl,
-  });
-
   @override
   _PreviousOrderMealTileState createState() => _PreviousOrderMealTileState();
 }
@@ -23,9 +15,51 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
   Widget build(BuildContext context) {
     final height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
-    final width = MediaQuery.of(context).size.width -
-        MediaQuery.of(context).padding.left -
-        MediaQuery.of(context).padding.right;
+    // final width = MediaQuery.of(context).size.width -
+    //     MediaQuery.of(context).padding.left -
+    //     MediaQuery.of(context).padding.right;
+    final Meal chosenMeal = Provider.of<Meal>(context, listen: false);
+    final Widget imagePrice = ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(height * 0.05),
+        topRight: Radius.circular(height * 0.05),
+      ),
+      child: Stack(
+        children: <Widget>[
+          Image.network(
+            chosenMeal.imageUrl,
+            fit: BoxFit.cover,
+            height: height * 0.23,
+            width: double.infinity,
+          ),
+          Positioned(
+            top: 10,
+            left: 10,
+            child: Container(
+              height: height * 0.085,
+              width: height * 0.085,
+              child: Card(
+                elevation: 5,
+                shape: CircleBorder(),
+                color: Colors.white,
+                child: FittedBox(
+                  child: Padding(
+                    padding: EdgeInsets.all(height * 0.004),
+                    child: Text(
+                      "₹" + chosenMeal.price.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1
+                          .copyWith(fontSize: height * 0.01),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
     return Container(
       width: height * 0.35,
       height: height * 0.35,
@@ -38,47 +72,7 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
             elevation: 5,
             child: Column(
               children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(height * 0.05),
-                    topRight: Radius.circular(height * 0.05),
-                  ),
-                  child: Stack(
-                    children: <Widget>[
-                      Image.network(
-                        widget.imageUrl,
-                        fit: BoxFit.cover,
-                        height: height * 0.23,
-                        width: double.infinity,
-                      ),
-                      Positioned(
-                        top: 10,
-                        left: 10,
-                        child: Container(
-                          height: height * 0.085,
-                          width: height * 0.085,
-                          child: Card(
-                            elevation: 5,
-                            shape: CircleBorder(),
-                            color: Colors.white,
-                            child: FittedBox(
-                              child: Padding(
-                                padding: EdgeInsets.all(height * 0.004),
-                                child: Text(
-                                  "₹" + widget.price.toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline1
-                                      .copyWith(fontSize: height * 0.01),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                imagePrice,
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -142,7 +136,30 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                             style: TextStyle(
                                 color: Colors.white, fontSize: height * 0.015),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            if (chosenMeal.typesPrices != null) {
+                              showModalBottomSheet(
+                                  context: context,
+                                  isDismissible: true,
+                                  builder: (context) =>
+                                      AddToCartModalSheet(value, chosenMeal));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(value.toString() +
+                                      " " +
+                                      chosenMeal.title +
+                                      " added to cart!"),
+                                  duration: const Duration(milliseconds: 1500),
+                                  width: MediaQuery.of(context).size.width - 80,
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                         ),
                       ),
                     ],
@@ -157,7 +174,7 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
               alignment: Alignment.centerLeft,
               child: FittedBox(
                 child: Text(
-                  widget.title,
+                  chosenMeal.title,
                   style: Theme.of(context).textTheme.headline1.copyWith(
                       fontSize: height * 0.034, fontWeight: FontWeight.w400),
                 ),

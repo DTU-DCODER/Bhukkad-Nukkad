@@ -141,7 +141,7 @@ List<Meal> micMacMeals = [
     "m10",
     "Soya Keema Paratha",
     78,
-    "https://s3-ap-south-1.amazonaws.com/betterbutterbucket-silver/reena-andavarapu20190210233031045.jpg",
+    "http://www.premascook.com/wp-content/uploads/2015/09/Soya-keema-Paratha.jpg",
   ),
 ];
 List<Meal> hpmcMeals = [
@@ -150,78 +150,143 @@ List<Meal> hpmcMeals = [
     "Apple Juice",
     30,
     "https://brooklynfarmgirl.com/wp-content/uploads/2019/02/Apple-Juice-Featured-Image.jpg",
+    typesPrices: {
+      "Small": 30,
+      "Medium": 35,
+      "Large": 40,
+    },
   ),
   Meal(
     "m2",
     "Pomegranate Juice",
     35,
     "https://cdn-prod.medicalnewstoday.com/content/images/articles/318/318385/halves-pomegranate-with-seeds-and-pomegranate-juice-on-marbled-surface.jpg",
+    typesPrices: {
+      "Small": 35,
+      "Medium": 40,
+      "Large": 45,
+    },
   ),
   Meal(
     "m3",
     "Strawberry Juice",
     30,
     "https://lh3.googleusercontent.com/fKxyH2l-7UMek_8UHU0PpXH3vbe5JPV421TZsLQcfpde_Jjfppqip6Ul0MjdKhgQBu9FmP-VdWieWBRN_5OG=w1280-h960-c-rj-v1-e365",
+    typesPrices: {
+      "Small": 30,
+      "Medium": 35,
+      "Large": 40,
+    },
   ),
   Meal(
     "m4",
     "Avocado Juice",
     30,
     "https://www.thespruceeats.com/thmb/1TvYgXqM3MFgxb5qPbDy4BMs3Bs=/2012x1490/filters:fill(auto,1)/GettyImages-511024538-5afef110875db9003675c624.jpg",
+    typesPrices: {
+      "Small": 30,
+      "Medium": 35,
+      "Large": 40,
+    },
   ),
   Meal(
     "m5",
     "Melon Juice",
     25,
     "https://5.imimg.com/data5/DT/PV/MY-28707171/magic-musk-melon-juice-500x500.png",
+    typesPrices: {
+      "Small": 25,
+      "Medium": 30,
+      "Large": 35,
+    },
   ),
   Meal(
     "m6",
     "Banana Juice",
     20,
     "https://5.imimg.com/data5/DT/PV/MY-28707171/magic-musk-melon-juice-500x500.png",
+    typesPrices: {
+      "Small": 20,
+      "Medium": 25,
+      "Large": 30,
+    },
   ),
   Meal(
     "m7",
     "Mix Juice",
     30,
     "https://4.imimg.com/data4/XB/FG/MY-31657999/mix-fruit-juice-500x500.jpg",
+    typesPrices: {
+      "Small": 30,
+      "Medium": 35,
+      "Large": 40,
+    },
   ),
   Meal(
     "m8",
     "Mosambi Juice",
     25,
     "https://i.ndtvimg.com/i/2016-11/mosambi_620x350_61479372568.jpg",
+    typesPrices: {
+      "Small": 25,
+      "Medium": 30,
+      "Large": 35,
+    },
   ),
   Meal(
     "m9",
     "Watermelon Juice",
     20,
     "https://www.thespruceeats.com/thmb/btkemOkvdGKQLPy2YAvRbDfH4HQ=/3000x2000/filters:fill(auto,1)/watermelon-juice-recipe-to-burn-fat-2078407-hero-03-5754d230d6304eed951d94968c6173b8.jpg",
+    typesPrices: {
+      "Small": 20,
+      "Medium": 25,
+      "Large": 30,
+    },
   ),
   Meal(
     "m10",
     "Mango Juice",
     30,
     "https://static.toiimg.com/thumb/59809728.cms?imgsize=78258&width=800&height=800",
+    typesPrices: {
+      "Small": 30,
+      "Medium": 35,
+      "Large": 40,
+    },
   ),
   Meal(
     "m11",
     "Orange Juice",
     25,
     "https://www.alphafoodie.com/wp-content/uploads/2020/11/Orange-Juice-1-of-1.jpeg",
+    typesPrices: {
+      "Small": 25,
+      "Medium": 30,
+      "Large": 35,
+    },
   ),
   Meal(
     "m12",
     "Grape Juice",
     20,
     "https://4.imimg.com/data4/VT/LQ/MY-31657999/grape-juice-500x500.jpg",
+    typesPrices: {
+      "Small": 20,
+      "Medium": 25,
+      "Large": 30,
+    },
   ),
   Meal(
     "m13",
     "Pineapple Juice",
     20,
     "https://5.imimg.com/data5/LT/XB/MY-28787720/pineapple-drink-500x500.jpg",
+    typesPrices: {
+      "Small": 20,
+      "Medium": 25,
+      "Large": 30,
+    },
   ),
 ];
 List<Meal> nescafeMeals = [
@@ -230,72 +295,121 @@ List<Meal> nescafeMeals = [
     "Coffee Regular",
     30,
     "https://media3.s-nbcnews.com/j/newscms/2019_33/2203981/171026-better-coffee-boost-se-329p_67dfb6820f7d3898b5486975903c2e51.fit-1240w.jpg",
+    typesPrices: {
+      "Small": 30,
+      "Medium": 35,
+      "Large": 40,
+    },
   ),
   Meal(
     "m2",
     "Cappuccino",
     40,
     "https://i.pinimg.com/736x/f4/98/9a/f4989acca14ba58f116b49fde0d4e0b0.jpg",
+    typesPrices: {
+      "Small": 40,
+      "Medium": 45,
+      "Large": 50,
+    },
   ),
   Meal(
     "m3",
     "Cappuccino Twister",
     40,
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoW_s4EndZ2R6A7J66uBQBCOFp5Gt_MOAQew&usqp=CAU",
+    typesPrices: {
+      "Small": 40,
+      "Medium": 45,
+      "Large": 50,
+    },
   ),
   Meal(
     "m4",
     "Espresso",
     20,
     "https://static.scientificamerican.com/sciam/cache/file/7C0BADB7-D030-4E4E-BE715FB20458C51E_source.jpg?w=590&h=800&533ACFE5-6F68-4434-B0595E60892B668A",
+    typesPrices: {
+      "Small": 20,
+      "Medium": 25,
+      "Large": 30,
+    },
   ),
   Meal(
     "m5",
     "Cafe Mocha",
     50,
     "https://upload.wikimedia.org/wikipedia/commons/7/7e/Mocha_coffee.jpg",
+    typesPrices: {
+      "Small": 50,
+      "Medium": 55,
+      "Large": 60,
+    },
   ),
   Meal(
     "m6",
     "Cafe Latte",
     35,
     "https://upload.wikimedia.org/wikipedia/commons/c/c6/Latte_art_3.jpg",
+    typesPrices: {
+      "Small": 35,
+      "Medium": 40,
+      "Large": 45,
+    },
   ),
   Meal(
     "m7",
     "Chocodelite",
     50,
     "https://i1.wp.com/gatherforbread.com/wp-content/uploads/2014/10/Dark-Chocolate-Mocha-Square.jpg?fit=1000%2C1000&ssl=1",
+    typesPrices: {
+      "Small": 50,
+      "Medium": 55,
+      "Large": 60,
+    },
   ),
   Meal(
     "m8",
-    "Nescafe Ice Regular",
+    "Nescafe Ice",
     50,
     "https://www.nestleprofessional.us/sites/g/files/gfb131/f/styles/recipe/public/media/instant-iced-coffee-nestle-professional-food-service-430x320.jpg?itok=lKyuuT8Y",
-  ),
-  Meal(
-    "m9",
-    "Nescafe Ice Large",
-    70,
-    "https://www.nestleprofessional.us/sites/g/files/gfb131/f/styles/recipe/public/media/instant-iced-coffee-nestle-professional-food-service-430x320.jpg?itok=lKyuuT8Y",
+    typesPrices: {
+      "Small": 50,
+      "Medium": 55,
+      "Large": 60,
+    },
   ),
   Meal(
     "m10",
     "Iced Tea",
     40,
     "https://www.ohhowcivilized.com/wp-content/uploads/2019/05/0519-iced-tea-8-1.jpg",
+    typesPrices: {
+      "Small": 40,
+      "Medium": 45,
+      "Large": 50,
+    },
   ),
   Meal(
     "m11",
     "Nescafe Ice Twister",
     60,
     "https://i.pinimg.com/originals/44/24/d7/4424d779477a8b49ae047aea79b5f4c1.jpg",
+    typesPrices: {
+      "Small": 60,
+      "Medium": 65,
+      "Large": 70,
+    },
   ),
   Meal(
     "m12",
     "Iced Tea Twister",
     50,
     "https://www.vegrecipesofindia.com/wp-content/uploads/2017/05/lemon-iced-tea-recipe-1.jpg",
+    typesPrices: {
+      "Small": 50,
+      "Medium": 55,
+      "Large": 60,
+    },
   ),
 ];
 
