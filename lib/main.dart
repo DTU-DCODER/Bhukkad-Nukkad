@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'screens/text_styles_screen.dart';
+import './screens/login_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   };
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: TextStylesScreen(),
+      home: SplashPage(),
       theme: ThemeData(
         primarySwatch: MaterialColor(0xfff58f29, primarySwatchColorMap),
         primaryColor: Color.fromRGBO(245, 143, 41, 1),
@@ -70,6 +71,30 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Bhukkad Nukkad",
+          style: Theme.of(context).appBarTheme.textTheme.headline1,
+        ),
+      ),
+      body: LoginScreen(),
+    );
+  }
+}
+
+class SplashPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: LoginScreen(),
     );
   }
 }
