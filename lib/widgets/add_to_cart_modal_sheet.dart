@@ -28,6 +28,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
         padding: EdgeInsets.all(height * 0.01),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               widget.chosenMeal.title,
@@ -39,7 +40,10 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
             Divider(),
             Text(
               "Select any one option: ",
-              style: TextStyle(fontSize: width * 0.06),
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  .copyWith(fontSize: width * 0.04),
             ),
             SizedBox(height: height * 0.01),
             Container(
@@ -123,6 +127,21 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                     color: Colors.black,
                   ),
                   onTap: () {
+                    if (widget.value == 15) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("You cannot order more than 15!"),
+                          duration: const Duration(milliseconds: 1500),
+                          width: MediaQuery.of(context).size.width - 80,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          backgroundColor: Theme.of(context).errorColor,
+                        ),
+                      );
+                      return;
+                    }
                     setState(() {
                       widget.value++;
                     });

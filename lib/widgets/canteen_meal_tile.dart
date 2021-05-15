@@ -77,6 +77,21 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                       color: Colors.black,
                     ),
                     onTap: () {
+                      if (value == 15) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("You cannot order more than 15!"),
+                            duration: const Duration(milliseconds: 1500),
+                            width: MediaQuery.of(context).size.width - 80,
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            backgroundColor: Theme.of(context).errorColor,
+                          ),
+                        );
+                        return;
+                      }
                       setState(() {
                         value++;
                       });

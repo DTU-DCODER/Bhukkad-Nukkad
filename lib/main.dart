@@ -49,12 +49,12 @@ class MyApp extends StatelessWidget {
           ),
           subtitle1: TextStyle(
             fontFamily: "QuickSand",
-            color: Colors.grey,
+            color: Colors.grey[700],
             fontSize: 16,
           ),
           subtitle2: TextStyle(
             fontFamily: "SF-Pro",
-            color: Colors.grey,
+            color: Colors.grey[700],
             fontSize: 18,
             fontWeight: FontWeight.w300,
           ),
