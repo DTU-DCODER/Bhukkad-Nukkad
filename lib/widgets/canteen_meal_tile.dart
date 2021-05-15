@@ -25,8 +25,8 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
     final favoritesData = Provider.of<Favorites>(context);
     final chosenMeal = Provider.of<Meal>(context);
     isFav = favoritesData.isFav(widget.canteenId, chosenMeal.id);
+
     return Container(
-      padding: EdgeInsets.only(bottom: height * 0.01),
       height: height * 0.1465,
       child: Card(
         elevation: 5,
@@ -40,7 +40,7 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
             ),
             SizedBox(width: width * 0.02),
             Container(
-              width: width * 0.255,
+              width: width * 0.25,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -48,14 +48,14 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                   Text(
                     chosenMeal.title,
                     softWrap: true,
-                    style: TextStyle(fontSize: height * 0.023),
+                    style: TextStyle(fontSize: width * 0.045),
                   ),
                   FittedBox(
                     child: Text(
                       "₹" + chosenMeal.price.toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: height * 0.02,
+                        fontSize: width * 0.041,
                       ),
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
@@ -65,47 +65,50 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
               ),
             ),
             //SizedBox(width: width * 0.07),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                InkWell(
-                  child: Icon(
-                    Icons.keyboard_arrow_up,
-                    size: height * 0.029,
-                    color: Colors.black,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  InkWell(
+                    child: Icon(
+                      Icons.keyboard_arrow_up,
+                      size: height * 0.029,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      setState(() {
+                        value++;
+                      });
+                    },
                   ),
-                  onTap: () {
-                    setState(() {
-                      value++;
-                    });
-                  },
-                ),
-                Text(
-                  value.toString(),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: height * 0.02,
+                  Text(
+                    value.toString(),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: height * 0.02,
+                    ),
                   ),
-                ),
-                InkWell(
-                  child: Icon(
-                    Icons.keyboard_arrow_down,
-                    size: height * 0.029,
-                    color: Colors.black,
+                  InkWell(
+                    child: Icon(
+                      Icons.keyboard_arrow_down,
+                      size: height * 0.029,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      if (value == 1) return;
+                      setState(() {
+                        value--;
+                      });
+                    },
                   ),
-                  onTap: () {
-                    if (value == 1) return;
-                    setState(() {
-                      value--;
-                    });
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
             Container(
               margin: EdgeInsets.all(height * 0.01),
               padding: EdgeInsets.all(height * 0.008),
+              width: width * 0.16,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Theme.of(context).accentColor,
@@ -113,21 +116,23 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                 borderRadius: BorderRadius.circular(height * 0.01),
               ),
               child: InkWell(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      "ADD",
-                      style: TextStyle(
-                          color: Colors.black, fontSize: height * 0.025),
-                    ),
-                    Text(
-                      "+",
-                      style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                          fontSize: height * 0.025),
-                    ),
-                  ],
+                child: FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "ADD",
+                        style: TextStyle(
+                            color: Colors.black, fontSize: width * 0.043),
+                      ),
+                      Text(
+                        "+",
+                        style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                            fontSize: width * 0.043),
+                      ),
+                    ],
+                  ),
                 ),
                 onTap: () {
                   if (chosenMeal.typesPrices != null) {
@@ -159,7 +164,7 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
               icon: Icon(
                 isFav ? Icons.favorite : Icons.favorite_border,
                 color: Theme.of(context).accentColor,
-                size: height * 0.04,
+                size: width * 0.08,
               ),
               onPressed: () {
                 setState(() {

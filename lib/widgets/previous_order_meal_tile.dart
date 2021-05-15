@@ -15,9 +15,9 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
   Widget build(BuildContext context) {
     final height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
-    // final width = MediaQuery.of(context).size.width -
-    //     MediaQuery.of(context).padding.left -
-    //     MediaQuery.of(context).padding.right;
+    final width = MediaQuery.of(context).size.width -
+        MediaQuery.of(context).padding.left -
+        MediaQuery.of(context).padding.right;
     final Meal chosenMeal = Provider.of<Meal>(context, listen: false);
     final Widget imagePrice = ClipRRect(
       borderRadius: BorderRadius.only(
@@ -90,7 +90,7 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                       InkWell(
                         child: Icon(
                           Icons.remove_circle_outline,
-                          size: height * 0.0366,
+                          size: width * 0.076,
                           color: Colors.white,
                         ),
                         onTap: () {
@@ -105,14 +105,14 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                         value.toString(),
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: height * 0.02,
+                          fontSize: width * 0.04,
                         ),
                       ),
                       //SizedBox(width: 12),
                       InkWell(
                         child: Icon(
                           Icons.add_circle_outline,
-                          size: height * 0.0366,
+                          size: width * 0.076,
                           color: Colors.white,
                         ),
                         onTap: () {
@@ -128,13 +128,19 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                           border: Border.all(
                             color: Colors.white,
                           ),
-                          borderRadius: BorderRadius.circular(height * 0.02),
+                          borderRadius: BorderRadius.circular(height * 0.015),
                         ),
+                        width: width * 0.13,
+                        height: height * 0.04,
                         child: InkWell(
-                          child: Text(
-                            "ADD",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: height * 0.015),
+                          child: Center(
+                            child: Text(
+                              "ADD",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: width * 0.032,
+                              ),
+                            ),
                           ),
                           onTap: () {
                             if (chosenMeal.typesPrices != null) {
@@ -169,7 +175,10 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 5),
+            padding: EdgeInsets.only(
+              left: width * 0.055,
+              top: height * 0.013,
+            ),
             child: Align(
               alignment: Alignment.centerLeft,
               child: FittedBox(

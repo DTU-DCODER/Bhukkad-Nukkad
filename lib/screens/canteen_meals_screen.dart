@@ -10,16 +10,25 @@ import '../providers/favorites.dart';
 import '../widgets/canteen_meal_tile.dart';
 
 class CanteenMealsScreen extends StatelessWidget {
-  final canteenId = "c4";
+  final canteenId = "c3";
   static const routeName = "/canteen-meals-screen";
   Widget buildTitle(BuildContext context, String text) {
+    final width = MediaQuery.of(context).size.width -
+        MediaQuery.of(context).padding.left -
+        MediaQuery.of(context).padding.right;
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: EdgeInsets.only(
+        left: width * 0.04,
+        bottom: width * 0.03,
+      ),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
           text,
-          style: Theme.of(context).textTheme.headline1.copyWith(fontSize: 26),
+          style: Theme.of(context)
+              .textTheme
+              .headline1
+              .copyWith(fontSize: width * 0.065),
         ),
       ),
     );
@@ -33,6 +42,9 @@ class CanteenMealsScreen extends StatelessWidget {
     );
     final height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    final width = MediaQuery.of(context).size.width -
+        MediaQuery.of(context).padding.left -
+        MediaQuery.of(context).padding.right;
     bool previousOrdersDoNotExist = previousOrders[canteenId].length == 0;
     return Scaffold(
       appBar: PreferredSize(
@@ -142,7 +154,7 @@ class CanteenMealsScreen extends StatelessWidget {
             buildTitle(context, "Items available now"),
             Container(
               height: height * 0.5,
-              padding: EdgeInsets.only(left: 15, right: 15),
+              padding: EdgeInsets.symmetric(horizontal: width * 0.02),
               child: ChangeNotifierProvider(
                 create: (_) => Favorites(),
                 child: ListView.builder(

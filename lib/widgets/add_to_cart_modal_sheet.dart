@@ -34,16 +34,16 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
               style: Theme.of(context)
                   .textTheme
                   .headline1
-                  .copyWith(fontSize: height * 0.045),
+                  .copyWith(fontSize: width * 0.09),
             ),
             Divider(),
             Text(
               "Select any one option: ",
-              style: TextStyle(fontSize: height * 0.03),
+              style: TextStyle(fontSize: width * 0.06),
             ),
             SizedBox(height: height * 0.01),
             Container(
-              height: height * 0.32,
+              height: height * 0.3,
               padding: EdgeInsets.all(height * 0.01),
               child: ListView.builder(
                 itemCount: widget.chosenMeal.typesPrices.length,
@@ -55,7 +55,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                       Text(
                         currentType,
                         style: Theme.of(context).textTheme.bodyText1.copyWith(
-                              fontSize: height * 0.029,
+                              fontSize: width * 0.055,
                             ),
                       ),
                       Row(
@@ -97,7 +97,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                 InkWell(
                   child: Icon(
                     Icons.remove_circle_outline,
-                    size: height * 0.05,
+                    size: width * 0.08,
                     color: Colors.black,
                   ),
                   onTap: () {
@@ -112,14 +112,14 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                   widget.value.toString(),
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: height * 0.04,
+                    fontSize: width * 0.07,
                   ),
                 ),
                 //SizedBox(width: 12),
                 InkWell(
                   child: Icon(
                     Icons.add_circle_outline,
-                    size: height * 0.05,
+                    size: width * 0.08,
                     color: Colors.black,
                   ),
                   onTap: () {
