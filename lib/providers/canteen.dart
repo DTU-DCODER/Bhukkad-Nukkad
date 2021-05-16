@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'meal.dart';
+import './meal.dart';
 
 class Canteen with ChangeNotifier {
   final String id;

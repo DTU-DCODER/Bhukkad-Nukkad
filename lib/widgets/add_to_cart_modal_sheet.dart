@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import '../providers/meal.dart';
 
 class AddToCartModalSheet extends StatefulWidget {
-  int value;
+  final int value;
   final Meal chosenMeal;
   AddToCartModalSheet(this.value, this.chosenMeal);
   @override
-  _AddToCartModalSheetState createState() => _AddToCartModalSheetState();
+  _AddToCartModalSheetState createState() => _AddToCartModalSheetState(value);
 }
 
 class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
+  int value;
+  _AddToCartModalSheetState(this.value);
   var _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -105,15 +107,15 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                     color: Colors.black,
                   ),
                   onTap: () {
-                    if (widget.value == 1) return;
+                    if (value == 1) return;
                     setState(() {
-                      widget.value--;
+                      value--;
                     });
                   },
                 ),
                 //SizedBox(width: 20),
                 Text(
-                  widget.value.toString(),
+                  value.toString(),
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: width * 0.07,
@@ -127,7 +129,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                     color: Colors.black,
                   ),
                   onTap: () {
-                    if (widget.value == 15) {
+                    if (value == 15) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("You cannot order more than 15!"),
@@ -143,7 +145,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                       return;
                     }
                     setState(() {
-                      widget.value++;
+                      value++;
                     });
                   },
                 ),
@@ -159,7 +161,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                     child: Text(
                       "ADD - ₹" +
                           (widget.chosenMeal.typesPrices[keys[_selectedIndex]] *
-                                  widget.value)
+                                  value)
                               .toString(),
                       style: TextStyle(
                         color: Colors.white,
@@ -171,7 +173,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(widget.value.toString() +
+                          content: Text(value.toString() +
                               " " +
                               widget.chosenMeal.title +
                               " added to cart!"),
