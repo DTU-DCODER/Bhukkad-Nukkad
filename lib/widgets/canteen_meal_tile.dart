@@ -17,11 +17,11 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
   bool isFav;
   @override
   Widget build(BuildContext context) {
-    final height =
-        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
-    final width = MediaQuery.of(context).size.width -
+    final height = (MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top);
+    final width = (MediaQuery.of(context).size.width -
         MediaQuery.of(context).padding.left -
-        MediaQuery.of(context).padding.right;
+        MediaQuery.of(context).padding.right);
     final chosenMeal = Provider.of<Meal>(context);
 
     return Container(
@@ -155,6 +155,7 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                         builder: (context) =>
                             AddToCartModalSheet(value, chosenMeal));
                   } else {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(value.toString() +

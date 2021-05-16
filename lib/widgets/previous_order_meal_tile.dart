@@ -13,11 +13,13 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
   int value = 1;
   @override
   Widget build(BuildContext context) {
-    final height =
-        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
-    final width = MediaQuery.of(context).size.width -
-        MediaQuery.of(context).padding.left -
-        MediaQuery.of(context).padding.right;
+    final height = (MediaQuery.of(context).size.height -
+            MediaQuery.of(context).padding.top) *
+        0.8;
+    final width = (MediaQuery.of(context).size.width -
+            MediaQuery.of(context).padding.left -
+            MediaQuery.of(context).padding.right) *
+        0.8;
     final Meal chosenMeal = Provider.of<Meal>(context, listen: false);
     final Widget imagePrice = ClipRRect(
       borderRadius: BorderRadius.only(
@@ -33,8 +35,8 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
             width: double.infinity,
           ),
           Positioned(
-            top: 10,
-            left: 10,
+            top: height * 0.012,
+            left: height * 0.012,
             child: Container(
               height: height * 0.085,
               width: height * 0.085,
@@ -117,6 +119,7 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                         ),
                         onTap: () {
                           if (value == 15) {
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text("You cannot order more than 15!"),
@@ -165,6 +168,8 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                                   builder: (context) =>
                                       AddToCartModalSheet(value, chosenMeal));
                             } else {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(value.toString() +

@@ -109,7 +109,9 @@ flutter:
         - asset: assets/fonts/SF-Pro-ThinItalic.otf
           weight: 100
           style: italic
-
+    - family: Impact
+      fonts:
+        - asset: assets/fonts/Impact.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

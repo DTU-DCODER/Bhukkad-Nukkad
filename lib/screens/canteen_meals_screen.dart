@@ -13,9 +13,10 @@ class CanteenMealsScreen extends StatelessWidget {
   final canteenId = "c3";
   static const routeName = "/canteen-meals-screen";
   Widget buildTitle(BuildContext context, String text) {
-    final width = MediaQuery.of(context).size.width -
-        MediaQuery.of(context).padding.left -
-        MediaQuery.of(context).padding.right;
+    final width = (MediaQuery.of(context).size.width -
+            MediaQuery.of(context).padding.left -
+            MediaQuery.of(context).padding.right) *
+        0.8;
     return Padding(
       padding: EdgeInsets.only(
         left: width * 0.04,
@@ -80,8 +81,7 @@ class CanteenMealsScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
-                            fontFamily: "FiraSans",
-                            fontWeight: FontWeight.w900,
+                            fontFamily: "Impact",
                             fontSize: height * 0.13,
                           ),
                         ),
@@ -124,7 +124,7 @@ class CanteenMealsScreen extends StatelessWidget {
                     ),
                   )
                 : ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: height * 0.40),
+                    constraints: BoxConstraints(maxHeight: height * 0.33),
                     child: ListView.builder(
                       itemCount: previousOrders[canteenId].length + 1,
                       itemBuilder: (ctx, index) {

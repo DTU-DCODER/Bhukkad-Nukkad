@@ -16,11 +16,11 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
   var _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final height =
-        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
-    final width = MediaQuery.of(context).size.width -
+    final height = (MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top);
+    final width = (MediaQuery.of(context).size.width -
         MediaQuery.of(context).padding.left -
-        MediaQuery.of(context).padding.right;
+        MediaQuery.of(context).padding.right);
     //final   chosenMeal = Provider.of<Meal>(context);
     final List<String> keys = widget.chosenMeal.getKeys();
     return Scaffold(
@@ -171,6 +171,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(value.toString() +
