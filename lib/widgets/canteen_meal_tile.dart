@@ -22,9 +22,7 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
     final width = MediaQuery.of(context).size.width -
         MediaQuery.of(context).padding.left -
         MediaQuery.of(context).padding.right;
-    final favoritesData = Provider.of<Favorites>(context);
     final chosenMeal = Provider.of<Meal>(context);
-    isFav = favoritesData.isFav(widget.canteenId, chosenMeal.id);
 
     return Container(
       height: height * 0.1465,
@@ -175,22 +173,25 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                 },
               ),
             ),
-            IconButton(
-              icon: Icon(
-                isFav ? Icons.favorite : Icons.favorite_border,
-                color: Theme.of(context).accentColor,
-                size: width * 0.08,
-              ),
-              onPressed: () {
-                setState(() {
-                  if (isFav)
-                    favoritesData.removeItem(widget.canteenId, chosenMeal.id);
-                  else
-                    favoritesData.addItem(widget.canteenId, chosenMeal.id);
-                  isFav = !isFav;
-                });
-              },
-            )
+            Consumer<Favorites>(builder: (_, favoritesData, __) {
+              isFav = favoritesData.isFav(widget.canteenId, chosenMeal.id);
+              return IconButton(
+                icon: Icon(
+                  isFav ? Icons.favorite : Icons.favorite_border,
+                  color: Theme.of(context).accentColor,
+                  size: width * 0.08,
+                ),
+                onPressed: () {
+                  setState(() {
+                    if (isFav)
+                      favoritesData.removeItem(widget.canteenId, chosenMeal.id);
+                    else
+                      favoritesData.addItem(widget.canteenId, chosenMeal.id);
+                    isFav = !isFav;
+                  });
+                },
+              );
+            })
           ],
         ),
       ),
