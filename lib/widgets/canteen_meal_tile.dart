@@ -29,6 +29,7 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
       child: Card(
         elevation: 5,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.network(
               chosenMeal.imageUrl,
@@ -49,14 +50,32 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                     style: TextStyle(fontSize: width * 0.045),
                   ),
                   FittedBox(
-                    child: Text(
-                      "₹" + chosenMeal.price.toString(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: width * 0.041,
-                      ),
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FittedBox(
+                          child: Text(
+                            "₹" + chosenMeal.price.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: width * 0.041,
+                            ),
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        SizedBox(width: width * 0.03),
+                        if (value > 1)
+                          FittedBox(
+                            child: Text(
+                              "₹${chosenMeal.price * value}",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: width * 0.04,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ],
@@ -76,6 +95,7 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                     ),
                     onTap: () {
                       if (value == 15) {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text("You cannot order more than 15!"),
@@ -154,6 +174,9 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                         isDismissible: true,
                         builder: (context) =>
                             AddToCartModalSheet(value, chosenMeal));
+                    setState(() {
+                      value = 1;
+                    });
                   } else {
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -170,29 +193,35 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                         ),
                       ),
                     );
+                    setState(() {
+                      value = 1;
+                    });
                   }
                 },
               ),
             ),
-            Consumer<Favorites>(builder: (_, favoritesData, __) {
-              isFav = favoritesData.isFav(widget.canteenId, chosenMeal.id);
-              return IconButton(
-                icon: Icon(
-                  isFav ? Icons.favorite : Icons.favorite_border,
-                  color: Theme.of(context).accentColor,
-                  size: width * 0.08,
-                ),
-                onPressed: () {
-                  setState(() {
-                    if (isFav)
-                      favoritesData.removeItem(widget.canteenId, chosenMeal.id);
-                    else
-                      favoritesData.addItem(widget.canteenId, chosenMeal.id);
-                    isFav = !isFav;
-                  });
-                },
-              );
-            })
+            Consumer<Favorites>(
+              builder: (_, favoritesData, __) {
+                isFav = favoritesData.isFav(widget.canteenId, chosenMeal.id);
+                return IconButton(
+                  icon: Icon(
+                    isFav ? Icons.favorite : Icons.favorite_border,
+                    color: Theme.of(context).accentColor,
+                    size: width * 0.08,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      if (isFav)
+                        favoritesData.removeItem(
+                            widget.canteenId, chosenMeal.id);
+                      else
+                        favoritesData.addItem(widget.canteenId, chosenMeal.id);
+                      isFav = !isFav;
+                    });
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),

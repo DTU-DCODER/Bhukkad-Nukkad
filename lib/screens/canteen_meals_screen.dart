@@ -10,7 +10,7 @@ import '../providers/favorites.dart';
 import '../widgets/canteen_meal_tile.dart';
 
 class CanteenMealsScreen extends StatelessWidget {
-  final canteenId = "c3";
+  final canteenId = "c1";
   static const routeName = "/canteen-meals-screen";
   Widget buildTitle(BuildContext context, String text) {
     final width = (MediaQuery.of(context).size.width -
@@ -152,29 +152,40 @@ class CanteenMealsScreen extends StatelessWidget {
                     ),
                   ),
             buildTitle(context, "Items available now"),
-            Container(
-              height: height * 0.5,
-              padding: EdgeInsets.symmetric(horizontal: width * 0.02),
-              child: ChangeNotifierProvider(
-                create: (_) => Favorites(),
-                child: ListView.builder(
-                  itemCount: chosenCanteen.meals.length,
-                  itemBuilder: (ctx, index) {
-                    final Meal chosenMeal = chosenCanteen.meals[index];
-                    if (chosenMeal.isAvailable)
-                      return ChangeNotifierProvider.value(
-                        key: ValueKey("CanteenMeal" +
-                            canteenId.toString() +
-                            chosenMeal.id),
-                        value: chosenMeal,
+            // Container(
+            //   height: height * 0.5,
+            //   padding: EdgeInsets.symmetric(horizontal: width * 0.02),
+            ChangeNotifierProvider(
+              create: (_) => Favorites(),
+              child: Column(
+                children: chosenCanteen.meals.map((chosenMeal) {
+                  if (chosenMeal.isAvailable)
+                    return ChangeNotifierProvider.value(
+                      key: ValueKey(
+                          "CanteenMeal" + canteenId.toString() + chosenMeal.id),
+                      value: chosenMeal,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                         child: CanteenMealTile(canteenId),
-                      );
-                    else
-                      return SizedBox(height: 0);
-                  },
-                ),
+                      ),
+                    );
+                  else
+                    return SizedBox(height: 0);
+                }).toList(),
+                // itemBuilder: (ctx, index) {
+                //   final Meal chosenMeal = chosenCanteen.meals[index];
               ),
             ),
+            //SizedBox(height: height * 0.02),
+            Divider(color: Colors.white),
+            Text(
+              "Brought to you by the Bhukkad Nukkad Team",
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle1
+                  .copyWith(fontStyle: FontStyle.italic),
+            ),
+            Divider(color: Colors.white),
           ],
         ),
       ),

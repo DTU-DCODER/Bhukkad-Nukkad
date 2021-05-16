@@ -139,6 +139,7 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                           });
                         },
                       ),
+
                       Container(
                         constraints: BoxConstraints(minHeight: height * 0.01),
                         padding: EdgeInsets.all(height * 0.007),
@@ -167,6 +168,9 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                                   isDismissible: true,
                                   builder: (context) =>
                                       AddToCartModalSheet(value, chosenMeal));
+                              setState(() {
+                                value = 1;
+                              });
                             } else {
                               ScaffoldMessenger.of(context)
                                   .hideCurrentSnackBar();
@@ -184,6 +188,9 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                                   ),
                                 ),
                               );
+                              setState(() {
+                                value = 1;
+                              });
                             }
                           },
                         ),
@@ -201,12 +208,27 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
             ),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: FittedBox(
-                child: Text(
-                  chosenMeal.title,
-                  style: Theme.of(context).textTheme.headline1.copyWith(
-                      fontSize: height * 0.034, fontWeight: FontWeight.w400),
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FittedBox(
+                    child: Text(
+                      chosenMeal.title,
+                      style: Theme.of(context).textTheme.headline1.copyWith(
+                          fontSize: height * 0.034,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  if (value > 1)
+                    Text(
+                      "₹${chosenMeal.price * value}",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: width * 0.06,
+                      ),
+                    ),
+                  SizedBox(width: width * 0.0001),
+                ],
               ),
             ),
           ),
