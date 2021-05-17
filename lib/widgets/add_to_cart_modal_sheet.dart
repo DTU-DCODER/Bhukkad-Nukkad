@@ -12,6 +12,7 @@ class AddToCartModalSheet extends StatefulWidget {
 
 class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
   int value;
+  bool pressAttention = true;
   _AddToCartModalSheetState(this.value);
   var _selectedIndex = 0;
   @override
@@ -154,8 +155,15 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                   width: width * 0.5,
                   padding: EdgeInsets.all(height * 0.02),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
+                    color: pressAttention
+                        ? Theme.of(context).accentColor
+                        : Colors.white,
                     borderRadius: BorderRadius.circular(height * 0.02),
+                    border: Border.all(
+                      color: pressAttention
+                          ? Colors.white
+                          : Theme.of(context).accentColor,
+                    ),
                   ),
                   child: InkWell(
                     child: Text(
@@ -164,12 +172,20 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                                   value)
                               .toString(),
                       style: TextStyle(
-                        color: Colors.white,
+                        color: pressAttention
+                            ? Colors.white
+                            : Theme.of(context).accentColor,
                         fontSize: height * 0.02,
                       ),
                       textAlign: TextAlign.center,
                     ),
+                    onTapDown: (_) => setState(() {
+                      pressAttention = !pressAttention;
+                    }),
                     onTap: () {
+                      setState(() {
+                        pressAttention = !pressAttention;
+                      });
                       Navigator.of(context).pop(true);
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(

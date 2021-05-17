@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       child: Builder(
         builder: (context) => MaterialApp(
           home: ChangeNotifierProvider.value(
-            value: Provider.of<Canteens>(context).findById("c2"),
+            value: Provider.of<Canteens>(context).findById("c1"),
             child: CanteenMealsScreen(),
           ),
           theme: ThemeData(
