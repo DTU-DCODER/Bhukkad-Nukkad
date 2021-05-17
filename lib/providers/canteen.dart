@@ -15,8 +15,12 @@ class Canteen with ChangeNotifier {
     this.isOpen = true,
   });
 
-  void setClosed() {
-    isOpen = false;
+  void setMealUnavailable(String mealId) {
+    meals.firstWhere((element) => element.id == mealId).isAvailable = false;
     notifyListeners();
+  }
+
+  Meal findMealById(String mealId) {
+    return meals.firstWhere((element) => element.id == mealId);
   }
 }

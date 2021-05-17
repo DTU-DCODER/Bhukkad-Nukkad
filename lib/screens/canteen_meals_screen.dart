@@ -1,4 +1,3 @@
-import 'package:bhukkadnukkad/providers/favorites.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,11 +5,11 @@ import '../DUMMY_DATA.dart';
 import '../widgets/previous_order_meal_tile.dart';
 import '../providers/meal.dart';
 import '../providers/canteen.dart';
-import '../providers/favorites.dart';
 import '../widgets/canteen_meal_tile.dart';
 
 class CanteenMealsScreen extends StatelessWidget {
   final canteenId = "c1";
+
   static const routeName = "/canteen-meals-screen";
   Widget buildTitle(BuildContext context, String text) {
     final width = (MediaQuery.of(context).size.width -
@@ -38,9 +37,11 @@ class CanteenMealsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //print(previousOrders[canteenId].length);
-    final Canteen chosenCanteen = canteenList.firstWhere(
-      (element) => element.id == canteenId,
-    );
+    // final Canteen chosenCanteen = canteenList.firstWhere(
+    //   (element) => element.id == canteenId,
+    // );
+
+    final chosenCanteen = Provider.of<Canteen>(context, listen: false);
     final height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     final width = MediaQuery.of(context).size.width -
@@ -124,7 +125,7 @@ class CanteenMealsScreen extends StatelessWidget {
                     ),
                   )
                 : ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: height * 0.33),
+                    constraints: BoxConstraints(maxHeight: height * 0.32),
                     child: ListView.builder(
                       itemCount: previousOrders[canteenId].length + 1,
                       itemBuilder: (ctx, index) {
@@ -155,35 +156,30 @@ class CanteenMealsScreen extends StatelessWidget {
             // Container(
             //   height: height * 0.5,
             //   padding: EdgeInsets.symmetric(horizontal: width * 0.02),
-            ChangeNotifierProvider(
-              create: (_) => Favorites(),
-              child: Column(
-                children: chosenCanteen.meals.map((chosenMeal) {
-                  if (chosenMeal.isAvailable)
-                    return ChangeNotifierProvider.value(
-                      key: ValueKey(
-                          "CanteenMeal" + canteenId.toString() + chosenMeal.id),
-                      value: chosenMeal,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: width * 0.02),
-                        child: CanteenMealTile(canteenId),
-                      ),
-                    );
-                  else
-                    return SizedBox(height: 0);
-                }).toList(),
-                // itemBuilder: (ctx, index) {
-                //   final Meal chosenMeal = chosenCanteen.meals[index];
-              ),
+            Column(
+              children: chosenCanteen.meals.map((chosenMeal) {
+                if (chosenMeal.isAvailable)
+                  return ChangeNotifierProvider.value(
+                    key: ValueKey(
+                        "CanteenMeal" + canteenId.toString() + chosenMeal.id),
+                    value: chosenMeal,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.02),
+                      child: CanteenMealTile(),
+                    ),
+                  );
+                else
+                  return SizedBox(height: 0);
+              }).toList(),
+              // itemBuilder: (ctx, index) {
+              //   final Meal chosenMeal = chosenCanteen.meals[index];
             ),
             //SizedBox(height: height * 0.02),
             Divider(color: Colors.white),
             Text(
               "Brought to you by the Bhukkad Nukkad Team",
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  .copyWith(fontStyle: FontStyle.italic),
+              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  fontStyle: FontStyle.italic, fontSize: height * 0.018),
             ),
             Divider(color: Colors.white),
           ],

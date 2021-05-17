@@ -164,13 +164,13 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                           onTap: () {
                             if (chosenMeal.typesPrices != null) {
                               showModalBottomSheet(
-                                  context: context,
-                                  isDismissible: true,
-                                  builder: (context) =>
-                                      AddToCartModalSheet(value, chosenMeal));
-                              setState(() {
-                                value = 1;
-                              });
+                                      context: context,
+                                      isDismissible: true,
+                                      builder: (context) => AddToCartModalSheet(
+                                          value, chosenMeal))
+                                  .then((_) => setState(() {
+                                        value = 1;
+                                      }));
                             } else {
                               ScaffoldMessenger.of(context)
                                   .hideCurrentSnackBar();

@@ -18,4 +18,10 @@ class Canteens with ChangeNotifier {
   Canteen findById(String id) {
     return _canteenList.firstWhere((element) => element.id == id);
   }
+
+  void setCanteenUnavailable(String canteenId) {
+    _canteenList.firstWhere((element) => element.id == canteenId).isOpen =
+        false;
+    notifyListeners();
+  }
 }

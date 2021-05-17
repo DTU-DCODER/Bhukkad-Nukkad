@@ -3,11 +3,12 @@ import 'package:provider/provider.dart';
 
 import '../providers/favorites.dart';
 import '../providers/meal.dart';
+import '../providers/canteen.dart';
 import '../widgets/add_to_cart_modal_sheet.dart';
 
 class CanteenMealTile extends StatefulWidget {
-  final String canteenId;
-  CanteenMealTile(this.canteenId);
+  // final String canteenId;
+  // CanteenMealTile(this.canteenId);
   @override
   _CanteenMealTileState createState() => _CanteenMealTileState();
 }
@@ -22,8 +23,8 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
     final width = (MediaQuery.of(context).size.width -
         MediaQuery.of(context).padding.left -
         MediaQuery.of(context).padding.right);
-    final chosenMeal = Provider.of<Meal>(context);
-
+    final chosenMeal = Provider.of<Meal>(context, listen: false);
+    final canteenId = Provider.of<Canteen>(context, listen: false).id;
     return Container(
       height: height * 0.1465,
       child: Card(
@@ -170,13 +171,13 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                 onTap: () {
                   if (chosenMeal.typesPrices != null) {
                     showModalBottomSheet(
-                        context: context,
-                        isDismissible: true,
-                        builder: (context) =>
-                            AddToCartModalSheet(value, chosenMeal));
-                    setState(() {
-                      value = 1;
-                    });
+                            context: context,
+                            isDismissible: true,
+                            builder: (context) =>
+                                AddToCartModalSheet(value, chosenMeal))
+                        .then((_) => setState(() {
+                              value = 1;
+                            }));
                   } else {
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -202,7 +203,7 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
             ),
             Consumer<Favorites>(
               builder: (_, favoritesData, __) {
-                isFav = favoritesData.isFav(widget.canteenId, chosenMeal.id);
+                isFav = favoritesData.isFav(canteenId, chosenMeal.id);
                 return IconButton(
                   icon: Icon(
                     isFav ? Icons.favorite : Icons.favorite_border,
@@ -212,10 +213,9 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                   onPressed: () {
                     setState(() {
                       if (isFav)
-                        favoritesData.removeItem(
-                            widget.canteenId, chosenMeal.id);
+                        favoritesData.removeItem(canteenId, chosenMeal.id);
                       else
-                        favoritesData.addItem(widget.canteenId, chosenMeal.id);
+                        favoritesData.addItem(canteenId, chosenMeal.id);
                       isFav = !isFav;
                     });
                   },
