@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 
-class LoginScreen extends StatelessWidget {
+class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height -
@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "LOGIN",
+                      "SIGN UP",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor,
@@ -73,6 +73,37 @@ class LoginScreen extends StatelessWidget {
                     Row(
                       children: [
                         Icon(
+                          Icons.phone,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: "MOBILE NUMBER",
+                              filled: true,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              contentPadding: EdgeInsets.all(15),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
                           Icons.lock,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -98,17 +129,8 @@ class LoginScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "FORGOT PASSWORD?",
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      )
-                    ]),
                     SizedBox(
-                      height: 10,
+                      height: 30,
                     ),
                     Container(
                       child: Center(
@@ -118,7 +140,7 @@ class LoginScreen extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () {},
                             child: Text(
-                              "LOGIN",
+                              "SIGN UP",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),
@@ -143,13 +165,13 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account?",
+                      "Already have an account?",
                       style: TextStyle(fontSize: 16),
                     ),
                     TextButton(
                       onPressed: () {},
                       child: Text(
-                        "REGISTER.",
+                        "LOGIN.",
                         style: TextStyle(fontSize: 16),
                       ),
                     )

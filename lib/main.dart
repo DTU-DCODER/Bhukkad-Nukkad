@@ -1,3 +1,4 @@
+import 'package:bhukkadnukkad/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/text_styles_screen.dart';
@@ -94,7 +95,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LoginScreen(),
+      body: SignUpScreen(),
     );
   }
 }
