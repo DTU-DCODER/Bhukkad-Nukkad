@@ -8,8 +8,6 @@ import '../providers/canteen.dart';
 import '../widgets/canteen_meal_tile.dart';
 
 class CanteenMealsScreen extends StatelessWidget {
-  final canteenId = "c1";
-
   static const routeName = "/canteen-meals-screen";
   Widget buildTitle(BuildContext context, String text) {
     final width = (MediaQuery.of(context).size.width -
@@ -36,12 +34,8 @@ class CanteenMealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //print(previousOrders[canteenId].length);
-    // final Canteen chosenCanteen = canteenList.firstWhere(
-    //   (element) => element.id == canteenId,
-    // );
-
     final chosenCanteen = Provider.of<Canteen>(context, listen: false);
+    final canteenId = chosenCanteen.id;
     final height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     final width = MediaQuery.of(context).size.width -

@@ -16,15 +16,20 @@ class CanteenMealTile extends StatefulWidget {
 class _CanteenMealTileState extends State<CanteenMealTile> {
   int value = 1;
   bool isFav;
+  bool pressAttention = true;
   @override
   Widget build(BuildContext context) {
+    Color addTextColor = Colors.black;
+    Color addBackgroundcolor = Colors.white;
+    Color borderColor = Theme.of(context).accentColor;
     final height = (MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top);
     final width = (MediaQuery.of(context).size.width -
         MediaQuery.of(context).padding.left -
         MediaQuery.of(context).padding.right);
-    final chosenMeal = Provider.of<Meal>(context, listen: false);
-    final canteenId = Provider.of<Canteen>(context, listen: false).id;
+    final chosenMeal = Provider.of<Meal>(context);
+    final canteenId = Provider.of<Canteen>(context).id;
+
     return Container(
       height: height * 0.1465,
       child: Card(
@@ -145,8 +150,13 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
               width: width * 0.16,
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Theme.of(context).accentColor,
+                  color: pressAttention
+                      ? Theme.of(context).accentColor
+                      : Colors.white,
                 ),
+                color: pressAttention
+                    ? Colors.white
+                    : Theme.of(context).accentColor,
                 borderRadius: BorderRadius.circular(height * 0.01),
               ),
               child: InkWell(
@@ -157,26 +167,37 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                       Text(
                         "ADD",
                         style: TextStyle(
-                            color: Colors.black, fontSize: width * 0.043),
+                          color: pressAttention ? Colors.black : Colors.white,
+                          fontSize: width * 0.043,
+                        ),
                       ),
                       Text(
                         "+",
                         style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontSize: width * 0.043),
+                          color: pressAttention
+                              ? Theme.of(context).accentColor
+                              : Colors.white,
+                          fontSize: width * 0.043,
+                        ),
                       ),
                     ],
                   ),
                 ),
+                onTapDown: (_) => setState(() {
+                  pressAttention = !pressAttention;
+                }),
                 onTap: () {
+                  setState(() {
+                    pressAttention = !pressAttention;
+                  });
                   if (chosenMeal.typesPrices != null) {
                     showModalBottomSheet(
                             context: context,
                             isDismissible: true,
                             builder: (context) =>
                                 AddToCartModalSheet(value, chosenMeal))
-                        .then((_) => setState(() {
-                              value = 1;
+                        .then((returnValue) => setState(() {
+                              if (returnValue) value = 1;
                             }));
                   } else {
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();

@@ -11,6 +11,7 @@ class PreviousOrderMealTile extends StatefulWidget {
 
 class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
   int value = 1;
+  bool pressAttention = true;
   @override
   Widget build(BuildContext context) {
     final height = (MediaQuery.of(context).size.height -
@@ -145,8 +146,13 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                         padding: EdgeInsets.all(height * 0.007),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Colors.white,
+                            color: pressAttention
+                                ? Colors.white
+                                : Theme.of(context).accentColor,
                           ),
+                          color: pressAttention
+                              ? Theme.of(context).accentColor
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(height * 0.015),
                         ),
                         width: width * 0.13,
@@ -156,20 +162,28 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
                             child: Text(
                               "ADD",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: pressAttention
+                                    ? Colors.white
+                                    : Theme.of(context).accentColor,
                                 fontSize: width * 0.032,
                               ),
                             ),
                           ),
+                          onTapDown: (_) => setState(() {
+                            pressAttention = !pressAttention;
+                          }),
                           onTap: () {
+                            setState(() {
+                              pressAttention = !pressAttention;
+                            });
                             if (chosenMeal.typesPrices != null) {
                               showModalBottomSheet(
                                       context: context,
                                       isDismissible: true,
                                       builder: (context) => AddToCartModalSheet(
                                           value, chosenMeal))
-                                  .then((_) => setState(() {
-                                        value = 1;
+                                  .then((returnValue) => setState(() {
+                                        if (returnValue) value = 1;
                                       }));
                             } else {
                               ScaffoldMessenger.of(context)

@@ -170,7 +170,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                       textAlign: TextAlign.center,
                     ),
                     onTap: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(true);
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
