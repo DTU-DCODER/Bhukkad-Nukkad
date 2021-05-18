@@ -3,9 +3,10 @@ import 'package:provider/provider.dart';
 
 import '../DUMMY_DATA.dart';
 import '../widgets/previous_order_meal_tile.dart';
-import '../providers/meal.dart';
-import '../providers/canteen.dart';
 import '../widgets/canteen_meal_tile.dart';
+import '../providers/meal.dart';
+import '../providers/canteens.dart';
+import './canteen_reviews_screen.dart';
 
 class CanteenMealsScreen extends StatelessWidget {
   static const routeName = "/canteen-meals-screen";
@@ -34,10 +35,12 @@ class CanteenMealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chosenCanteen = Provider.of<Canteen>(context, listen: false);
-    final canteenId = chosenCanteen.id;
-    final height =
-        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    final canteenId = ModalRoute.of(context).settings.arguments;
+    final chosenCanteen =
+        Provider.of<Canteens>(context, listen: false).findById(canteenId);
+    final height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom;
     final width = MediaQuery.of(context).size.width -
         MediaQuery.of(context).padding.left -
         MediaQuery.of(context).padding.right;
@@ -49,6 +52,9 @@ class CanteenMealsScreen extends StatelessWidget {
           title: Text(
             chosenCanteen.canteenName,
             style: Theme.of(context).appBarTheme.textTheme.headline1,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white,
           ),
         ),
       ),
@@ -101,7 +107,11 @@ class CanteenMealsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                            CanteenReviewsScreen.routeName,
+                            arguments: canteenId);
+                      },
                     ),
                   ),
                 ],
@@ -147,16 +157,22 @@ class CanteenMealsScreen extends StatelessWidget {
                     ),
                   ),
             buildTitle(context, "Items available now"),
-            // Container(
-            //   height: height * 0.5,
-            //   padding: EdgeInsets.symmetric(horizontal: width * 0.02),
             Column(
               children: chosenCanteen.meals.map((chosenMeal) {
                 if (chosenMeal.isAvailable)
-                  return ChangeNotifierProvider.value(
-                    key: ValueKey(
-                        "CanteenMeal" + canteenId.toString() + chosenMeal.id),
-                    value: chosenMeal,
+                  return MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider.value(
+                        key: ValueKey("CanteenMeal" +
+                            canteenId.toString() +
+                            chosenMeal.id),
+                        value: chosenMeal,
+                      ),
+                      ChangeNotifierProvider.value(
+                        key: ValueKey(canteenId),
+                        value: chosenCanteen,
+                      ),
+                    ],
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                       child: CanteenMealTile(),
@@ -165,10 +181,7 @@ class CanteenMealsScreen extends StatelessWidget {
                 else
                   return SizedBox(height: 0);
               }).toList(),
-              // itemBuilder: (ctx, index) {
-              //   final Meal chosenMeal = chosenCanteen.meals[index];
             ),
-            //SizedBox(height: height * 0.02),
             Divider(color: Colors.white),
             Text(
               "Brought to you by the Bhukkad Nukkad Team",

@@ -5,10 +5,30 @@ import '../DUMMY_DATA.dart';
 
 class Canteens with ChangeNotifier {
   List<Canteen> _canteenList = [
-    Canteen(id: "c1", canteenName: "Canteen", meals: canteenMealList), //13
-    Canteen(id: "c2", canteenName: "Mic Mac", meals: micMacMeals), //10
-    Canteen(id: "c3", canteenName: "HPMC", meals: hpmcMeals), //13
-    Canteen(id: "c4", canteenName: "Nescafe", meals: nescafeMeals), //12
+    Canteen(
+      id: "c1",
+      canteenName: "Canteen",
+      meals: canteenMealList,
+      reviews: canteenReviews,
+    ),
+    Canteen(
+      id: "c2",
+      canteenName: "Mic Mac",
+      meals: micMacMeals,
+      reviews: micMacReviews,
+    ),
+    Canteen(
+      id: "c3",
+      canteenName: "HPMC",
+      meals: hpmcMeals,
+      reviews: hpmcReviews,
+    ),
+    Canteen(
+      id: "c4",
+      canteenName: "Nescafe",
+      meals: nescafeMeals,
+      reviews: nescafeReviews,
+    ),
   ];
 
   List<Canteen> get canteens {
@@ -16,7 +36,8 @@ class Canteens with ChangeNotifier {
   }
 
   Canteen findById(String id) {
-    return _canteenList.firstWhere((element) => element.id == id);
+    Canteen ans = _canteenList.firstWhere((element) => element.id == id);
+    return ans;
   }
 
   void setCanteenUnavailable(String canteenId) {

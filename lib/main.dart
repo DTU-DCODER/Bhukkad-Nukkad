@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import './screens/canteen_meals_screen.dart';
 import './providers/canteens.dart';
 import './providers/favorites.dart';
+import './screens/canteen_reviews_screen.dart';
+import './screens/canteens_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,60 +37,60 @@ class MyApp extends StatelessWidget {
           create: (ctx) => Favorites(),
         )
       ],
-      child: Builder(
-        builder: (context) => MaterialApp(
-          home: ChangeNotifierProvider.value(
-            value: Provider.of<Canteens>(context).findById("c1"),
-            child: CanteenMealsScreen(),
+      child: MaterialApp(
+        home: CanteensScreen(),
+        theme: ThemeData(
+          primarySwatch: MaterialColor(0xfff58f29, primarySwatchColorMap),
+          primaryColor: Color.fromRGBO(245, 143, 41, 1),
+          accentColor: Color.fromRGBO(237, 37, 78, 1),
+          textTheme: TextTheme(
+            headline1: TextStyle(
+              fontFamily: "FiraSans",
+              fontSize: 36,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            headline2: TextStyle(
+              fontFamily: "FiraSans",
+              fontSize: 32,
+            ),
+            bodyText1: TextStyle(
+              fontFamily: "QuickSand",
+              fontSize: 24,
+            ),
+            bodyText2: TextStyle(
+              fontFamily: "SF-Pro",
+              fontSize: 26,
+              fontWeight: FontWeight.w300,
+            ),
+            subtitle1: TextStyle(
+              fontFamily: "QuickSand",
+              color: Colors.grey[700],
+              fontSize: 16,
+            ),
+            subtitle2: TextStyle(
+              fontFamily: "SF-Pro",
+              color: Colors.grey[700],
+              fontSize: 18,
+              fontWeight: FontWeight.w300,
+            ),
           ),
-          theme: ThemeData(
-            primarySwatch: MaterialColor(0xfff58f29, primarySwatchColorMap),
-            primaryColor: Color.fromRGBO(245, 143, 41, 1),
-            accentColor: Color.fromRGBO(237, 37, 78, 1),
+          appBarTheme: AppBarTheme(
+            color: Color.fromRGBO(245, 143, 41, 1),
             textTheme: TextTheme(
               headline1: TextStyle(
+                color: Colors.white,
                 fontFamily: "FiraSans",
-                fontSize: 36,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-              headline2: TextStyle(
-                fontFamily: "FiraSans",
-                fontSize: 32,
-              ),
-              bodyText1: TextStyle(
-                fontFamily: "QuickSand",
-                fontSize: 24,
-              ),
-              bodyText2: TextStyle(
-                fontFamily: "SF-Pro",
-                fontSize: 26,
-                fontWeight: FontWeight.w300,
-              ),
-              subtitle1: TextStyle(
-                fontFamily: "QuickSand",
-                color: Colors.grey[700],
-                fontSize: 16,
-              ),
-              subtitle2: TextStyle(
-                fontFamily: "SF-Pro",
-                color: Colors.grey[700],
-                fontSize: 18,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-            appBarTheme: AppBarTheme(
-              color: Color.fromRGBO(245, 143, 41, 1),
-              textTheme: TextTheme(
-                headline1: TextStyle(
-                  color: Colors.white,
-                  fontFamily: "FiraSans",
-                  fontWeight: FontWeight.bold,
-                ),
               ),
             ),
           ),
         ),
+        routes: {
+          CanteenReviewsScreen.routeName: (ctx) => CanteenReviewsScreen(),
+          CanteensScreen.routeName: (ctx) => CanteensScreen(),
+          CanteenMealsScreen.routeName: (ctx) => CanteenMealsScreen(),
+        },
       ),
     );
   }

@@ -137,12 +137,6 @@ List<Meal> micMacMeals = [
     78,
     "https://www.indianhealthyrecipes.com/wp-content/uploads/2015/07/palak-paratha.jpg",
   ),
-  Meal(
-    "m10",
-    "Soya Keema Paratha",
-    78,
-    "http://www.premascook.com/wp-content/uploads/2015/09/Soya-keema-Paratha.jpg",
-  ),
 ];
 List<Meal> hpmcMeals = [
   Meal(
@@ -413,12 +407,187 @@ List<Meal> nescafeMeals = [
   ),
 ];
 
-List<Canteen> canteenList = [
-  Canteen(id: "c1", canteenName: "Canteen", meals: canteenMealList), //13
-  Canteen(id: "c2", canteenName: "Mic Mac", meals: micMacMeals), //10
-  Canteen(id: "c3", canteenName: "HPMC", meals: hpmcMeals), //13
-  Canteen(id: "c4", canteenName: "Nescafe", meals: nescafeMeals), //12
-];
+Map<String, Review> canteenReviews = {
+  "u1": Review(
+    dateTime: DateTime(2019, 7, 3),
+    userName: "Satvik Gupta",
+    rating: 4,
+    description: "Crispy and hot",
+  ),
+  "u2": Review(
+    dateTime: DateTime(2019, 6, 28),
+    userName: "Leroy Jethro Gibbs",
+    rating: 3,
+    description: "Fast service and decent food.",
+  ),
+  "u3": Review(
+    dateTime: DateTime(2019, 6, 3),
+    userName: "Dean winchester",
+    rating: 4,
+    description: "",
+  ),
+  "u4": Review(
+    dateTime: DateTime(2019, 6, 2),
+    userName: "Tony DiNozzo",
+    rating: 5,
+    description: "Good food. Good service. Overall good experience.",
+  ),
+  "u5": Review(
+    dateTime: DateTime(2019, 5, 31),
+    userName: "John Reese",
+    rating: 5,
+    description: "Taste and food were just awesome",
+  ),
+  "u6": Review(
+    dateTime: DateTime(2019, 5, 12),
+    userName: "Ziva David",
+    rating: 5,
+    description: "Great food",
+  ),
+  "u7": Review(
+    dateTime: DateTime(2019, 5, 3),
+    userName: "Castiel",
+    rating: 5,
+    description: "Perfect",
+  ),
+};
+Map<String, Review> micMacReviews = {
+  "u1": Review(
+    dateTime: DateTime(2019, 8, 28),
+    userName: "Satvik Gupta",
+    rating: 4,
+    description: "Crispy and hot",
+  ),
+  "u2": Review(
+    dateTime: DateTime(2019, 8, 16),
+    userName: "Leroy Jethro Gibbs",
+    rating: 3,
+    description: "Fast service and decent food.",
+  ),
+  "u3": Review(
+    dateTime: DateTime(2019, 8, 13),
+    userName: "Dean winchester",
+    rating: 4,
+    description: "",
+  ),
+  "u4": Review(
+    dateTime: DateTime(2019, 8, 7),
+    userName: "Tony DiNozzo",
+    rating: 5,
+    description: "Good food. Good service. Overall good experience.",
+  ),
+  "u5": Review(
+    dateTime: DateTime(2019, 7, 12),
+    userName: "John Reese",
+    rating: 5,
+    description: "Taste and food were just awesome",
+  ),
+  "u6": Review(
+    dateTime: DateTime(2019, 7, 9),
+    userName: "Ziva David",
+    rating: 5,
+    description: "Great food",
+  ),
+  "u7": Review(
+    dateTime: DateTime(2019, 7, 5),
+    userName: "Castiel",
+    rating: 5,
+    description:
+        """Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+    
+    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.""",
+  ),
+};
+Map<String, Review> hpmcReviews = {
+  "u1": Review(
+    dateTime: DateTime(2020, 1, 14),
+    userName: "Satvik Gupta",
+    rating: 1,
+    description: "Crispy and hot",
+  ),
+  "u2": Review(
+    dateTime: DateTime(2020, 1, 13),
+    userName: "Leroy Jethro Gibbs",
+    rating: 1,
+    description: "Fast service and decent food.",
+  ),
+  "u3": Review(
+    dateTime: DateTime(2019, 12, 9),
+    userName: "Dean winchester",
+    rating: 1,
+    description: "",
+  ),
+  "u4": Review(
+    dateTime: DateTime(2019, 11, 21),
+    userName: "Tony DiNozzo",
+    rating: 1,
+    description: "Good food. Good service. Overall good experience.",
+  ),
+  "u5": Review(
+    dateTime: DateTime(2019, 11, 3),
+    userName: "John Reese",
+    rating: 1,
+    description: "Taste and food were just awesome",
+  ),
+  "u6": Review(
+    dateTime: DateTime(2019, 10, 10),
+    userName: "Ziva David",
+    rating: 2,
+    description: "Great food",
+  ),
+  "u7": Review(
+    dateTime: DateTime(2019, 9, 27),
+    userName: "Castiel",
+    rating: 3,
+    description: "Perfect",
+  ),
+};
+Map<String, Review> nescafeReviews = {
+  "u1": Review(
+    dateTime: DateTime(2020, 9, 1),
+    userName: "Satvik Gupta",
+    rating: 4,
+    description: "Crispy and hot",
+  ),
+  "u2": Review(
+    dateTime: DateTime(2020, 8, 10),
+    userName: "Leroy Jethro Gibbs",
+    rating: 3,
+    description: "Fast service and decent food.",
+  ),
+  "u3": Review(
+    dateTime: DateTime(2020, 8, 4),
+    userName: "Dean winchester",
+    rating: 4,
+    description: "",
+  ),
+  "u4": Review(
+    dateTime: DateTime(2020, 7, 28),
+    userName: "Tony DiNozzo",
+    rating: 5,
+    description: "Good food. Good service. Overall good experience.",
+  ),
+  "u5": Review(
+    dateTime: DateTime(2020, 7, 2),
+    userName: "John Reese",
+    rating: 5,
+    description: "Taste and food were just awesome",
+  ),
+  "u6": Review(
+    dateTime: DateTime(2020, 5, 29),
+    userName: "Ziva David",
+    rating: 5,
+    description: "Great food",
+  ),
+  "u7": Review(
+    dateTime: DateTime(2020, 5, 4),
+    userName: "Castiel",
+    rating: 5,
+    description: "Perfect",
+  ),
+};
 
 Map<String, List<String>> previousOrders = {
   "c1": ["m1", "m3", "m5", "m6", "m11", "m12"],

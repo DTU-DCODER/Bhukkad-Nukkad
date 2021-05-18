@@ -19,11 +19,9 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
   bool pressAttention = true;
   @override
   Widget build(BuildContext context) {
-    Color addTextColor = Colors.black;
-    Color addBackgroundcolor = Colors.white;
-    Color borderColor = Theme.of(context).accentColor;
     final height = (MediaQuery.of(context).size.height -
-        MediaQuery.of(context).padding.top);
+            MediaQuery.of(context).padding.top) -
+        MediaQuery.of(context).padding.bottom;
     final width = (MediaQuery.of(context).size.width -
         MediaQuery.of(context).padding.left -
         MediaQuery.of(context).padding.right);
