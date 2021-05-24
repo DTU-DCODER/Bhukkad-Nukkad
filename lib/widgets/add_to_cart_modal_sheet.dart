@@ -159,23 +159,9 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                       textAlign: TextAlign.center,
                     ),
                     onTap: () {
-                      cart.addItem(chosenProduct.id, chosenProduct.price,
-                          chosenProduct.title, value);
+                      cart.addItem(context, chosenProduct.id,
+                          chosenProduct.price, chosenProduct.title, value);
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(value.toString() +
-                              " " +
-                              chosenProduct.title +
-                              " added to cart!"),
-                          duration: const Duration(milliseconds: 1500),
-                          width: MediaQuery.of(context).size.width - 80,
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                      );
                     },
                   ),
                 ),
