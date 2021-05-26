@@ -7,6 +7,7 @@ import '../widgets/app_drawer.dart';
 import '../widgets/products_grid.dart';
 import '../widgets/badge.dart';
 import '../providers/cart.dart';
+import '../providers/products.dart';
 
 enum FilterOptions {
   Favorites,
@@ -20,6 +21,21 @@ class ProdcutsOverviewScreen extends StatefulWidget {
 
 class _ProdcutsOverviewScreenState extends State<ProdcutsOverviewScreen> {
   var _showOnlyFavorites = false;
+  bool _isInit = true;
+  bool _isLoading = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<Products>(context)
+          .fetchAndSetProducts()
+          .then((_) => setState(() {
+                _isLoading = false;
+              }));
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,24 +83,26 @@ class _ProdcutsOverviewScreenState extends State<ProdcutsOverviewScreen> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                "Shop Now",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1
-                    .copyWith(fontSize: screenHeight * 0.05),
-              ),
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      "Shop Now",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1
+                          .copyWith(fontSize: screenHeight * 0.05),
+                    ),
+                  ),
+                ),
+                Expanded(child: ProductsGrid(_showOnlyFavorites)),
+              ],
             ),
-          ),
-          Expanded(child: ProductsGrid(_showOnlyFavorites)),
-        ],
-      ),
       drawer: AppDrawer(),
     );
   }

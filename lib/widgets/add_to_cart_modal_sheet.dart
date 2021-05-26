@@ -13,6 +13,14 @@ class AddToCartModalSheet extends StatefulWidget {
 
 class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
   int value = 1;
+  bool _isInit = true;
+  @override
+  void didChangeDependencies() {
+    if (_isInit) ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context, listen: false);

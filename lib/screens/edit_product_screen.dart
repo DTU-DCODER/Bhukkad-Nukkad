@@ -30,6 +30,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _form = GlobalKey<FormState>();
   var newProduct = NewProduct();
   bool _isInit = true;
+  bool _isLoading = false;
   Product chosenProduct;
   bool get isImageValid {
     String url = _imageUrlController.text;
@@ -63,6 +64,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     final productsData = Provider.of<Products>(context, listen: false);
     _form.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
     final toBeAddedProduct = Product(
       id: chosenProduct.id == ""
           ? "p" + (productsData.itemsLength + 1).toString()
@@ -74,11 +78,34 @@ class _EditProductScreenState extends State<EditProductScreen> {
       isFavorite: chosenProduct.isFavorite,
     );
     if (chosenProduct.id == "") {
-      productsData.addProduct(toBeAddedProduct);
+      productsData.addProduct(toBeAddedProduct).catchError((error) {
+        return showDialog<Null>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text("An error occured!"),
+            content: Text("Something went wrong"),
+            actions: [
+              TextButton(
+                child: Text("Okay"),
+                onPressed: () => Navigator.of(ctx).pop(),
+              )
+            ],
+          ),
+        );
+      }).then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.of(context).pop();
+      });
     } else {
-      productsData.updateProduct(chosenProduct.id, toBeAddedProduct);
+      productsData.updateProduct(chosenProduct.id, toBeAddedProduct).then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.of(context).pop();
+      });
     }
-    Navigator.of(context).pop();
   }
 
   @override
@@ -125,135 +152,142 @@ class _EditProductScreenState extends State<EditProductScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _form,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextFormField(
-                  initialValue: newProduct.title,
-                  decoration: InputDecoration(
-                    labelText: "Title",
-                  ),
-                  textInputAction: TextInputAction.next,
-                  onSaved: (value) => newProduct.title = value,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "Title cannot be empty";
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  initialValue:
-                      newProduct.price != 0 ? newProduct.price.toString() : "",
-                  decoration: InputDecoration(
-                    labelText: "Price",
-                  ),
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  onSaved: (value) => newProduct.price = double.parse(value),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "Price cannot be empty!";
-                    }
-                    if (double.tryParse(value) == null) {
-                      return "Enter a valid number!";
-                    }
-                    if (double.parse(value) <= 0) {
-                      return "Price should be above zero!";
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  initialValue: newProduct.description,
-                  maxLines: 3,
-                  keyboardType: TextInputType.multiline,
-                  decoration: InputDecoration(
-                    labelText: "Description",
-                  ),
-                  onSaved: (value) => newProduct.description = value,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "Description cannot be empty";
-                    }
-                    if (value.length < 10) {
-                      return "At least 10 characters required";
-                    }
-                    return null;
-                  },
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(
-                        top: 8,
-                        right: 10,
-                      ),
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      child: _imageUrlController.text.isEmpty
-                          ? Center(
-                              child: FittedBox(
-                                child: Text("No URL Entered"),
-                              ),
-                            )
-                          : isImageValid
-                              ? FittedBox(
-                                  child: Image.network(
-                                    _imageUrlController.text,
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              : Center(
-                                  child: Text(
-                                    "Invalid URL",
-                                    style: TextStyle(
-                                        color: Theme.of(context).errorColor),
-                                  ),
-                                ),
-                    ),
-                    Expanded(
-                      child: TextFormField(
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _form,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        initialValue: newProduct.title,
                         decoration: InputDecoration(
-                          labelText: "Image URL",
+                          labelText: "Title",
                         ),
-                        keyboardType: TextInputType.url,
-                        textInputAction: TextInputAction.done,
-                        controller: _imageUrlController,
-                        focusNode: _imageUrlFocusNode,
-                        onEditingComplete: () => setState(() {}),
-                        onChanged: (_) => setState(() {}),
-                        onFieldSubmitted: (_) => _saveForm(),
-                        onSaved: (value) => newProduct.imageUrl = value,
+                        textInputAction: TextInputAction.next,
+                        onSaved: (value) => newProduct.title = value,
                         validator: (value) {
                           if (value.isEmpty) {
-                            return "Image URL cannot be empty";
-                          }
-                          if (!isImageValid) {
-                            return "Invalid URL";
+                            return "Title cannot be empty";
                           }
                           return null;
                         },
                       ),
-                    )
-                  ],
+                      TextFormField(
+                        initialValue: newProduct.price != 0
+                            ? newProduct.price.toString()
+                            : "",
+                        decoration: InputDecoration(
+                          labelText: "Price",
+                        ),
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.number,
+                        onSaved: (value) =>
+                            newProduct.price = double.parse(value),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Price cannot be empty!";
+                          }
+                          if (double.tryParse(value) == null) {
+                            return "Enter a valid number!";
+                          }
+                          if (double.parse(value) <= 0) {
+                            return "Price should be above zero!";
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: newProduct.description,
+                        maxLines: 3,
+                        keyboardType: TextInputType.multiline,
+                        decoration: InputDecoration(
+                          labelText: "Description",
+                        ),
+                        onSaved: (value) => newProduct.description = value,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Description cannot be empty";
+                          }
+                          if (value.length < 10) {
+                            return "At least 10 characters required";
+                          }
+                          return null;
+                        },
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(
+                              top: 8,
+                              right: 10,
+                            ),
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 1,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            child: _imageUrlController.text.isEmpty
+                                ? Center(
+                                    child: FittedBox(
+                                      child: Text("No URL Entered"),
+                                    ),
+                                  )
+                                : isImageValid
+                                    ? FittedBox(
+                                        child: Image.network(
+                                          _imageUrlController.text,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                    : Center(
+                                        child: Text(
+                                          "Invalid URL",
+                                          style: TextStyle(
+                                              color:
+                                                  Theme.of(context).errorColor),
+                                        ),
+                                      ),
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: "Image URL",
+                              ),
+                              keyboardType: TextInputType.url,
+                              textInputAction: TextInputAction.done,
+                              controller: _imageUrlController,
+                              focusNode: _imageUrlFocusNode,
+                              onEditingComplete: () => setState(() {}),
+                              onChanged: (_) => setState(() {}),
+                              onFieldSubmitted: (_) => _saveForm(),
+                              onSaved: (value) => newProduct.imageUrl = value,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Image URL cannot be empty";
+                                }
+                                if (!isImageValid) {
+                                  return "Invalid URL";
+                                }
+                                return null;
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
