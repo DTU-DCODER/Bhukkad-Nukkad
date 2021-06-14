@@ -80,8 +80,9 @@ class MyApp extends StatelessWidget {
             textTheme: TextTheme(
               headline1: TextStyle(
                 color: Colors.white,
-                fontFamily: "FiraSans",
+                fontFamily: "CFont",
                 fontWeight: FontWeight.bold,
+                fontSize: 30,
               ),
             ),
           ),

@@ -113,6 +113,11 @@ flutter:
     - family: Impact
       fonts:
         - asset: assets/fonts/Impact.ttf
+    - family : CFont
+      fonts:
+        - asset: assets/fonts/Cfont-Regular.ttf
+
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

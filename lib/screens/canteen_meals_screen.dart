@@ -128,8 +128,8 @@ class CanteenMealsScreen extends StatelessWidget {
                       ),
                     ),
                   )
-                : ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: height * 0.32),
+                : Container(
+                    height: height * 0.32,
                     child: ListView.builder(
                       itemCount: previousOrders[canteenId].length + 1,
                       itemBuilder: (ctx, index) {

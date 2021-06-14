@@ -9,7 +9,6 @@ class Stars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(averageRating);
     final averageRatingInt = averageRating.toInt();
     final averageRatingFrac = averageRating - averageRatingInt;
     return SizedBox(
@@ -20,7 +19,6 @@ class Stars extends StatelessWidget {
         itemCount: 6,
         itemBuilder: (ctx, i) {
           if (i < averageRatingInt) {
-            //print("test");
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(height * 0.01),

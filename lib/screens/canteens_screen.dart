@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/canteens.dart';
-import '../providers/canteen.dart';
 
 class CanteensScreen extends StatelessWidget {
   static const routeName = "/canteens-screen";
@@ -12,8 +11,10 @@ class CanteensScreen extends StatelessWidget {
     final canteensData = Provider.of<Canteens>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bhukkad Nukkad",
-            style: Theme.of(context).appBarTheme.textTheme.headline1),
+        title: Text(
+          "Bhukkad Nukkad",
+          style: Theme.of(context).appBarTheme.textTheme.headline1,
+        ),
         iconTheme: IconThemeData(
           color: Colors.white,
         ),

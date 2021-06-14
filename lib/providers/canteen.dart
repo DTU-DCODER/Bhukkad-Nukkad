@@ -66,10 +66,6 @@ class Canteen with ChangeNotifier {
   }
 
   double get averageRating {
-    if (reviews == null) {
-      print("NULL");
-      return 0;
-    }
     double sum = 0;
     int total = reviews.length;
     List<Review> reviewList = reviews.values.toList();

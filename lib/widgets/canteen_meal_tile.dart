@@ -57,26 +57,22 @@ class _CanteenMealTileState extends State<CanteenMealTile> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FittedBox(
-                          child: Text(
-                            "₹" + chosenMeal.price.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: width * 0.041,
-                            ),
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
+                        Text(
+                          "₹" + chosenMeal.price.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: width * 0.041,
                           ),
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(width: width * 0.03),
                         if (value > 1)
-                          FittedBox(
-                            child: Text(
-                              "₹${chosenMeal.price * value}",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: width * 0.04,
-                              ),
+                          Text(
+                            "₹${chosenMeal.price * value}",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: width * 0.04,
                             ),
                           ),
                       ],

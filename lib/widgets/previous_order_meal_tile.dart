@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +14,38 @@ class PreviousOrderMealTile extends StatefulWidget {
 class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
   int value = 1;
   bool pressAttention = true;
+
+  Widget titleRowBuilder(
+      Meal chosenMeal, double height, double width, bool shouldRenderSizedBox) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          chosenMeal.title,
+          style: Theme.of(context)
+              .textTheme
+              .headline1
+              .copyWith(fontSize: height * 0.034, fontWeight: FontWeight.w400),
+        ),
+        if (shouldRenderSizedBox)
+          SizedBox(
+            width: max(
+              10,
+              height * 0.35 - chosenMeal.title.length * height * 0.027,
+            ),
+          ),
+        if (value > 1)
+          Text(
+            "₹${chosenMeal.price * value}",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: width * 0.06,
+            ),
+          ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = (MediaQuery.of(context).size.height -
@@ -66,8 +100,9 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
     );
     return Container(
       width: height * 0.35,
-      height: height * 0.35,
-      child: Column(
+      height: height * 0.36,
+      child: Flex(
+        direction: Axis.vertical,
         children: <Widget>[
           Card(
             shape: RoundedRectangleBorder(
@@ -219,32 +254,16 @@ class _PreviousOrderMealTileState extends State<PreviousOrderMealTile> {
           Padding(
             padding: EdgeInsets.only(
               left: width * 0.055,
-              top: height * 0.013,
+              top: height * 0.005,
+              right: width * 0.055,
             ),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FittedBox(
-                    child: Text(
-                      chosenMeal.title,
-                      style: Theme.of(context).textTheme.headline1.copyWith(
-                          fontSize: height * 0.034,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                  if (value > 1)
-                    Text(
-                      "₹${chosenMeal.price * value}",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: width * 0.06,
-                      ),
-                    ),
-                  SizedBox(width: width * 0.0001),
-                ],
-              ),
+              child: chosenMeal.title.length > 11
+                  ? FittedBox(
+                      child: titleRowBuilder(chosenMeal, height, width, true),
+                    )
+                  : titleRowBuilder(chosenMeal, height, width, false),
             ),
           ),
         ],
