@@ -6,10 +6,10 @@ import '../providers/product.dart';
 import '../providers/products.dart';
 
 class NewProduct {
-  String title;
-  double price;
-  String imageUrl;
-  String description;
+  String? title;
+  double? price;
+  String? imageUrl;
+  String? description;
   NewProduct({
     this.title = "",
     this.price = 0,
@@ -31,12 +31,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
   var newProduct = NewProduct();
   bool _isInit = true;
   bool _isLoading = false;
-  Product chosenProduct;
+  Product? chosenProduct;
   bool get isImageValid {
     String url = _imageUrlController.text;
 
     bool _validURL = Uri.tryParse(url)?.hasAbsolutePath ?? false;
-    if (!url.isEmpty &&
+    if (url.isEmpty &&
         _validURL &&
         (url.endsWith('.jpg') ||
             url.endsWith('.jpeg') ||
@@ -58,26 +58,26 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _saveForm() {
     print("On saved triggered");
-    bool areAllValid = _form.currentState.validate();
+    bool areAllValid = _form.currentState!.validate();
     if (!areAllValid) {
       return;
     }
     final productsData = Provider.of<Products>(context, listen: false);
-    _form.currentState.save();
+    _form.currentState!.save();
     setState(() {
       _isLoading = true;
     });
     final toBeAddedProduct = Product(
-      id: chosenProduct.id == ""
+      id: chosenProduct!.id == ""
           ? "p" + (productsData.itemsLength + 1).toString()
-          : chosenProduct.id,
+          : chosenProduct!.id,
       description: newProduct.description,
       imageUrl: newProduct.imageUrl,
       price: newProduct.price,
       title: newProduct.title,
-      isFavorite: chosenProduct.isFavorite,
+      isFavorite: chosenProduct!.isFavorite,
     );
-    if (chosenProduct.id == "") {
+    if (chosenProduct!.id == "") {
       productsData.addProduct(toBeAddedProduct).catchError((error) {
         return showDialog<Null>(
           context: context,
@@ -99,7 +99,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
         Navigator.of(context).pop();
       });
     } else {
-      productsData.updateProduct(chosenProduct.id, toBeAddedProduct).then((_) {
+      productsData.updateProduct(chosenProduct!.id, toBeAddedProduct).then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -119,13 +119,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      final productId = ModalRoute.of(context).settings.arguments;
+      final productId = ModalRoute.of(context)!.settings.arguments;
       if (productId != null) {
-        chosenProduct = Provider.of<Products>(context).findById(productId);
-        newProduct.price = chosenProduct.price;
-        newProduct.description = chosenProduct.description;
-        newProduct.title = chosenProduct.title;
-        _imageUrlController.text = chosenProduct.imageUrl;
+        chosenProduct =
+            Provider.of<Products>(context).findById(productId as String);
+        newProduct.price = chosenProduct!.price;
+        newProduct.description = chosenProduct!.description;
+        newProduct.title = chosenProduct!.title;
+        _imageUrlController.text = chosenProduct!.imageUrl!;
       } else {
         chosenProduct = Product(
           description: "",
@@ -171,7 +172,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         textInputAction: TextInputAction.next,
                         onSaved: (value) => newProduct.title = value,
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value!.isEmpty) {
                             return "Title cannot be empty";
                           }
                           return null;
@@ -187,9 +188,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.number,
                         onSaved: (value) =>
-                            newProduct.price = double.parse(value),
+                            newProduct.price = double.parse(value!),
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value!.isEmpty) {
                             return "Price cannot be empty!";
                           }
                           if (double.tryParse(value) == null) {
@@ -210,7 +211,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         ),
                         onSaved: (value) => newProduct.description = value,
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value!.isEmpty) {
                             return "Description cannot be empty";
                           }
                           if (value.length < 10) {
@@ -271,7 +272,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               onFieldSubmitted: (_) => _saveForm(),
                               onSaved: (value) => newProduct.imageUrl = value,
                               validator: (value) {
-                                if (value.isEmpty) {
+                                if (value!.isEmpty) {
                                   return "Image URL cannot be empty";
                                 }
                                 if (!isImageValid) {

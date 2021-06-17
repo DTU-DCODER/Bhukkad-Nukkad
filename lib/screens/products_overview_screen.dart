@@ -14,12 +14,12 @@ enum FilterOptions {
   All,
 }
 
-class ProdcutsOverviewScreen extends StatefulWidget {
+class ProductsOverviewScreen extends StatefulWidget {
   @override
-  _ProdcutsOverviewScreenState createState() => _ProdcutsOverviewScreenState();
+  _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
 }
 
-class _ProdcutsOverviewScreenState extends State<ProdcutsOverviewScreen> {
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
   bool _isInit = true;
   bool _isLoading = true;
@@ -27,11 +27,16 @@ class _ProdcutsOverviewScreenState extends State<ProdcutsOverviewScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      Provider.of<Products>(context)
-          .fetchAndSetProducts()
-          .then((_) => setState(() {
-                _isLoading = false;
-              }));
+      if (_isInit) {
+        setState(() {
+          _isLoading = true;
+        });
+        Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+          setState(() {
+            _isLoading = false;
+          });
+        });
+      }
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -60,7 +65,7 @@ class _ProdcutsOverviewScreenState extends State<ProdcutsOverviewScreen> {
               ),
             ),
             PopupMenuButton(
-              onSelected: (selectedValue) {
+              onSelected: (dynamic selectedValue) {
                 setState(() {
                   if (selectedValue == FilterOptions.Favorites) {
                     _showOnlyFavorites = true;
@@ -95,7 +100,7 @@ class _ProdcutsOverviewScreenState extends State<ProdcutsOverviewScreen> {
                       "Shop Now",
                       style: Theme.of(context)
                           .textTheme
-                          .headline1
+                          .headline1!
                           .copyWith(fontSize: screenHeight * 0.05),
                     ),
                   ),

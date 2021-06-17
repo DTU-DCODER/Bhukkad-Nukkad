@@ -4,16 +4,16 @@ import 'package:provider/provider.dart';
 import '../providers/cart.dart';
 
 class CartItem extends StatelessWidget {
-  final String id;
-  final double price;
-  final int quantity;
-  final String title;
+  final String? id;
+  final double? price;
+  final int? quantity;
+  final String? title;
 
   CartItem({
-    @required this.id,
-    @required this.price,
-    @required this.quantity,
-    @required this.title,
+    required this.id,
+    required this.price,
+    required this.quantity,
+    required this.title,
   });
   @override
   Widget build(BuildContext context) {
@@ -70,8 +70,8 @@ class CartItem extends StatelessWidget {
                 ),
               ),
             ),
-            title: Text(title),
-            subtitle: Text("₹${price * quantity}"),
+            title: Text(title!),
+            subtitle: Text("₹${price! * quantity!}"),
             trailing: Text(quantity.toString() + "x"),
           ),
         ),

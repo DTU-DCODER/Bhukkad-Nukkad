@@ -5,16 +5,16 @@ import 'package:http/http.dart' as http;
 import './cart.dart';
 
 class OrderItem {
-  final String id;
-  final double amount;
+  final String? id;
+  final double? amount;
   final List<CartItem> products;
   final DateTime dateTime;
 
   OrderItem({
-    @required this.amount,
-    @required this.id,
-    @required this.products,
-    @required this.dateTime,
+    required this.amount,
+    required this.id,
+    required this.products,
+    required this.dateTime,
   });
 }
 
@@ -25,9 +25,13 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
+  final String? authToken;
+  final String? userId;
+  Orders(this.authToken, this.userId, this._orders);
+
   Future<void> addOrder(List<CartItem> cartProducts, double amount) {
     final url = Uri.parse(
-        "https://flutter-shop-app-f1b23-default-rtdb.firebaseio.com/orders.json");
+        "https://flutter-shop-app-f1b23-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken");
     final timeStamp = DateTime.now();
     return http
         .post(url,
@@ -63,11 +67,11 @@ class Orders with ChangeNotifier {
 
   Future<void> setAndFetchOrders() {
     final url = Uri.parse(
-        "https://flutter-shop-app-f1b23-default-rtdb.firebaseio.com/orders.json");
+        "https://flutter-shop-app-f1b23-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken");
     return http.get(url).then(
       (response) {
         final extractedData =
-            json.decode(response.body) as Map<String, dynamic>;
+            json.decode(response.body) as Map<String, dynamic>?;
         print(extractedData);
         if (extractedData == null) return null;
         extractedData.forEach(

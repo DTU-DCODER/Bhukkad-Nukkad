@@ -47,7 +47,7 @@ class _OrderItemState extends State<OrderItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            prod.title,
+                            prod.title!,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                             softWrap: true,

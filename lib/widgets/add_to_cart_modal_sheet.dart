@@ -43,8 +43,8 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
             Padding(
               padding: EdgeInsets.all(width * 0.001),
               child: Text(
-                chosenProduct.title,
-                style: Theme.of(context).textTheme.headline1.copyWith(
+                chosenProduct!.title!,
+                style: Theme.of(context).textTheme.headline1!.copyWith(
                       fontSize: width * 0.08,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -61,7 +61,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                 child: Row(
                   children: <Widget>[
                     Image.network(
-                      chosenProduct.imageUrl,
+                      chosenProduct.imageUrl!,
                       width: width * 0.4,
                       height: double.infinity,
                       fit: BoxFit.cover,
@@ -75,7 +75,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                         Container(
                           width: width * 0.54,
                           child: Text(
-                            chosenProduct.description,
+                            chosenProduct.description!,
                             softWrap: true,
                             style: TextStyle(fontSize: height * 0.016),
                           ),
@@ -159,7 +159,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                   ),
                   child: InkWell(
                     child: Text(
-                      "ADD - ₹" + (chosenProduct.price * value).toString(),
+                      "ADD - ₹" + (chosenProduct.price! * value).toString(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: height * 0.02,
@@ -168,7 +168,7 @@ class _AddToCartModalSheetState extends State<AddToCartModalSheet> {
                     ),
                     onTap: () {
                       cart.addItem(context, chosenProduct.id,
-                          chosenProduct.price, chosenProduct.title, value);
+                          chosenProduct.price, chosenProduct.title!, value);
                       Navigator.of(context).pop();
                     },
                   ),

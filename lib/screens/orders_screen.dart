@@ -46,7 +46,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     "No orders yet!",
                     style: Theme.of(context)
                         .textTheme
-                        .headline1
+                        .headline1!
                         .copyWith(fontSize: 50),
                   ),
                 )

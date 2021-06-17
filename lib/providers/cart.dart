@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 class CartItem {
-  final String id;
-  final String title;
-  int quantity;
-  final double price;
+  final String? id;
+  final String? title;
+  int? quantity;
+  final double? price;
 
   CartItem({
-    @required this.id,
-    @required this.title,
-    @required this.quantity,
-    @required this.price,
+    required this.id,
+    required this.title,
+    required this.quantity,
+    required this.price,
   });
 }
 
 class Cart with ChangeNotifier {
-  Map<String, CartItem> _cartItems = {};
+  Map<String?, CartItem> _cartItems = {};
 
-  Map<String, CartItem> get items {
+  Map<String?, CartItem> get items {
     return {..._cartItems};
   }
 
@@ -28,15 +28,16 @@ class Cart with ChangeNotifier {
   double get totalAmount {
     double total = 0;
     _cartItems.forEach((key, cartItem) {
-      total += cartItem.price * cartItem.quantity;
+      total += cartItem.price! * cartItem.quantity!;
     });
     return total;
   }
 
-  void addItem(BuildContext context, String productId, double price,
+  void addItem(BuildContext context, String? productId, double? price,
       String title, int quantity) {
     if (_cartItems.containsKey(productId)) {
-      _cartItems[productId].quantity += quantity;
+      _cartItems[productId]!.quantity =
+          _cartItems[productId]!.quantity! + quantity;
     } else {
       _cartItems.putIfAbsent(
         productId,
@@ -63,15 +64,16 @@ class Cart with ChangeNotifier {
     );
   }
 
-  void removeItem(String productId) {
+  void removeItem(String? productId) {
     _cartItems.remove(productId);
     notifyListeners();
   }
 
-  void removeLastEntry(String productId, int quantity) {
+  void removeLastEntry(String? productId, int quantity) {
     if (!_cartItems.containsKey(productId)) return;
-    if (_cartItems[productId].quantity > quantity) {
-      _cartItems[productId].quantity -= quantity;
+    if (_cartItems[productId]!.quantity! > quantity) {
+      _cartItems[productId]!.quantity =
+          _cartItems[productId]!.quantity! - quantity;
     } else {
       _cartItems.remove(productId);
     }
