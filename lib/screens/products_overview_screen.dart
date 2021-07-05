@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:math';
 
 import './cart_screen.dart';
 import '../widgets/app_drawer.dart';
@@ -27,16 +26,16 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      if (_isInit) {
-        setState(() {
-          _isLoading = true;
-        });
-        Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Products>(context).fetchAndSetProducts().then(
+        (_) {
           setState(() {
             _isLoading = false;
           });
-        });
-      }
+        },
+      );
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -47,46 +46,41 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     final screenHeight =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: (Size.fromHeight(
-          max<double>(screenHeight * 0.072, 40),
-        )),
-        child: AppBar(
-          title: Text("My Shop"),
-          actions: <Widget>[
-            Consumer<Cart>(
-              builder: (_, cart, __) => Badge(
-                IconButton(
-                  icon: Icon(Icons.shopping_cart),
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed(CartScreen.routeName),
-                ),
-                cart.itemCount.toString(),
+      appBar: AppBar(
+        title: Text("My Shop"),
+        actions: <Widget>[
+          Consumer<Cart>(
+            builder: (_, cart, __) => Badge(
+              IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(CartScreen.routeName),
               ),
+              cart.itemCount.toString(),
             ),
-            PopupMenuButton(
-              onSelected: (dynamic selectedValue) {
-                setState(() {
-                  if (selectedValue == FilterOptions.Favorites) {
-                    _showOnlyFavorites = true;
-                  } else
-                    _showOnlyFavorites = false;
-                });
-              },
-              icon: Icon(Icons.more_vert),
-              itemBuilder: (_) => [
-                PopupMenuItem(
-                  child: Text("Only Favorites"),
-                  value: FilterOptions.Favorites,
-                ),
-                PopupMenuItem(
-                  child: Text("Show All"),
-                  value: FilterOptions.All,
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+          PopupMenuButton(
+            onSelected: (dynamic selectedValue) {
+              setState(() {
+                if (selectedValue == FilterOptions.Favorites) {
+                  _showOnlyFavorites = true;
+                } else
+                  _showOnlyFavorites = false;
+              });
+            },
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                child: Text("Only Favorites"),
+                value: FilterOptions.Favorites,
+              ),
+              PopupMenuItem(
+                child: Text("Show All"),
+                value: FilterOptions.All,
+              ),
+            ],
+          ),
+        ],
       ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())

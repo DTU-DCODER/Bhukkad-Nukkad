@@ -54,6 +54,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    _items = [];
     final filterString =
         filterByUser ? '&orderBy="creatorId"&equalTo="$userId"' : '';
     var url = Uri.parse(
@@ -83,6 +84,7 @@ class Products with ChangeNotifier {
       _items = loadedProducts;
       notifyListeners();
     } catch (error) {
+      print(error);
       throw (error);
     }
   }

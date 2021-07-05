@@ -15,8 +15,11 @@ class UserProductItem extends StatelessWidget {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     return ListTile(
       title: Text(title!),
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(imageUrl!),
+      leading: Hero(
+        tag: "user" + id!,
+        child: CircleAvatar(
+          backgroundImage: NetworkImage(imageUrl!),
+        ),
       ),
       trailing: Container(
         width: 100,

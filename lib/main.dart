@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/screens/add_to_cart_screen.dart';
 
 import './providers/products.dart';
 import './providers/cart.dart';
@@ -52,11 +54,18 @@ class MyApp extends StatelessWidget {
         builder: (ctx, auth, _) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: "My Shop",
+          //scrollBehavior: CupertinoScrollBehavior(),
           theme: ThemeData(
             primarySwatch: Colors.blue,
             accentColor: Colors.cyan[200],
             primaryColor: Colors.cyan,
             fontFamily: "Lato",
+            // pageTransitionsTheme: PageTransitionsTheme(
+            //   builders: {
+            //     TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            //     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+            //   },
+            // ),
           ),
           home: auth.isAuth
               ? ProductsOverviewScreen()
@@ -74,6 +83,7 @@ class MyApp extends StatelessWidget {
             OrdersScreen.routeName: (ctx) => OrdersScreen(),
             UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
             EditProductScreen.routeName: (ctx) => EditProductScreen(),
+            AddToCartScreen.routeName: (ctx) => AddToCartScreen(),
           },
         ),
       ),

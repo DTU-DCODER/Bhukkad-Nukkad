@@ -16,47 +16,57 @@ class _OrderItemState extends State<OrderItem> {
   var _expanded = false;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            title: Text("₹${widget.order.amount}"),
-            subtitle: Text(
-              DateFormat("dd/MM/yyyy hh:mm").format(widget.order.dateTime),
-            ),
-            trailing: IconButton(
-              icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-              onPressed: () {
-                setState(() {
-                  _expanded = !_expanded;
-                });
-              },
-            ),
-          ),
-          if (_expanded)
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              constraints: BoxConstraints(
-                maxHeight: widget.order.products.length * 30.0,
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      height: _expanded ? widget.order.products.length * 20.0 + 120 : 95,
+      child: Card(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              title: Text("₹${widget.order.amount}"),
+              subtitle: Text(
+                DateFormat("dd/MM/yyyy hh:mm").format(widget.order.dateTime),
               ),
-              child: Column(
+              trailing: IconButton(
+                icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+                onPressed: () {
+                  setState(() {
+                    _expanded = !_expanded;
+                  });
+                },
+              ),
+            ),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              height: _expanded ? widget.order.products.length * 22.0 : 0,
+              child: ListView(
+                physics: NeverScrollableScrollPhysics(),
                 children: widget.order.products
                     .map(
                       (prod) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text(
-                            prod.title!,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                            softWrap: true,
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              prod.title!,
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                              //softWrap: true,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          Text(
-                            "${prod.quantity}x ₹${prod.price}",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.grey[700],
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              "${prod.quantity}x ₹${prod.price}",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[700],
+                              ),
                             ),
                           ),
                         ],
@@ -65,7 +75,8 @@ class _OrderItemState extends State<OrderItem> {
                     .toList(),
               ),
             )
-        ],
+          ],
+        ),
       ),
     );
   }

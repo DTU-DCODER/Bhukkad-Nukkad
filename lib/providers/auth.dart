@@ -99,6 +99,7 @@ class Auth with ChangeNotifier {
       _authTimer = null;
     }
     notifyListeners();
+
     final prefs = await SharedPreferences.getInstance();
     prefs.clear();
   }
@@ -108,7 +109,6 @@ class Auth with ChangeNotifier {
       _authTimer!.cancel();
     }
     final _timeToExpiry = _expiryDate!.difference(DateTime.now());
-
     _authTimer = Timer(_timeToExpiry, logout);
   }
 }

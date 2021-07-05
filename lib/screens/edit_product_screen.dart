@@ -36,7 +36,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     String url = _imageUrlController.text;
 
     bool _validURL = Uri.tryParse(url)?.hasAbsolutePath ?? false;
-    if (url.isEmpty &&
+    if (url.isNotEmpty &&
         _validURL &&
         (url.endsWith('.jpg') ||
             url.endsWith('.jpeg') ||
@@ -244,9 +244,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                   )
                                 : isImageValid
                                     ? FittedBox(
-                                        child: Image.network(
-                                          _imageUrlController.text,
-                                          fit: BoxFit.cover,
+                                        child: Hero(
+                                          tag: "user" + chosenProduct!.id!,
+                                          child: Image.network(
+                                            _imageUrlController.text,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       )
                                     : Center(

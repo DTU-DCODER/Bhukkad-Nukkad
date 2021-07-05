@@ -48,8 +48,26 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
               Provider.of<Auth>(context, listen: false).logout();
+              Navigator.of(context).pushNamed("/");
             },
           ),
+          Expanded(
+            child: SizedBox(height: 1),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                child: Text("This is button1"),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text("This is button2"),
+              )
+            ],
+          ),
+          SizedBox(height: 20),
         ],
       ),
     );

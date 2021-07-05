@@ -16,39 +16,46 @@ class CartScreen extends StatelessWidget {
         ),
         body: Column(
           children: <Widget>[
-            Card(
-              margin: EdgeInsets.all(15),
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text("Total", style: TextStyle(fontSize: 20)),
-                    Spacer(),
-                    Chip(
-                      label: Text(
-                        "₹" + (cart.totalAmount).toStringAsFixed(2),
-                        style: TextStyle(
-                          color: Theme.of(context)
-                              .primaryTextTheme
-                              .headline1!
-                              .color,
+            Expanded(
+              flex: 1,
+              child: Card(
+                margin: EdgeInsets.all(15).copyWith(bottom: 0),
+                child: Padding(
+                  padding: EdgeInsets.all(8).copyWith(bottom: 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text("Total", style: TextStyle(fontSize: 20)),
+                      Spacer(),
+                      Chip(
+                        label: Text(
+                          "₹" + (cart.totalAmount).toStringAsFixed(2),
+                          style: TextStyle(
+                            color: Theme.of(context)
+                                .primaryTextTheme
+                                .headline1!
+                                .color,
+                          ),
                         ),
+                        backgroundColor: Theme.of(context).primaryColor,
                       ),
-                      backgroundColor: Theme.of(context).primaryColor,
-                    ),
-                    OrderButton(cart: cart)
-                  ],
+                      SizedBox(width: 10),
+                      OrderButton(cart: cart)
+                    ],
+                  ),
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
             Expanded(
+              flex: 9,
               child: ListView.builder(
-                itemCount: cart.itemCount,
+                itemCount: cart.itemCount + 1,
                 itemBuilder: (ctx, index) {
+                  if (index == 0)
+                    return SizedBox(
+                      height: 10,
+                    );
+                  index--;
                   var currentItem = cart.items.values.toList()[index];
                   return CartItem(
                     id: currentItem.id,

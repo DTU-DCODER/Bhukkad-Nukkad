@@ -51,6 +51,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   ),
                 )
               : ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   itemCount: orderData.orders.length,
                   itemBuilder: (ctx, index) =>
                       OrderItem(orderData.orders[index]),

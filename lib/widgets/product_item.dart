@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
 import '../providers/auth.dart';
-import '../widgets/add_to_cart_modal_sheet.dart';
+import '../screens/add_to_cart_screen.dart';
 
 class ProductItem extends StatelessWidget {
   @override
@@ -17,58 +17,69 @@ class ProductItem extends StatelessWidget {
       elevation: 5,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: GridTile(
-          child: Image.network(
-            product.imageUrl!,
-            fit: BoxFit.cover,
-          ),
-          footer: Container(
-            color: Colors.black87,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Consumer<Product>(
-                  builder: (ctx, product, _) => IconButton(
-                    icon: Icon(product.isFavorite
-                        ? Icons.favorite
-                        : Icons.favorite_border),
-                    onPressed: () => product.toggleFavoriteStatus(
-                        authData.token, authData.userId),
-                    color: Theme.of(context).accentColor,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    product.title!,
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-                    overflow: TextOverflow.fade,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                Material(
-                  shape: CircleBorder(),
-                  //type: MaterialType.circle,
-                  clipBehavior: Clip.none,
-                  color: Colors.black87,
-                  child: Container(
-                    height: 45,
-                    width: 45,
-                    child: InkWell(
-                      customBorder: CircleBorder(),
-                      child: Icon(
-                        Icons.shopping_cart,
-                        color: Theme.of(context).accentColor,
-                      ),
-                      onTap: () => {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (_) => AddToCartModalSheet(product.id!))
-                      },
+        child: LayoutBuilder(
+          builder: (ctx, constraints) => GridTile(
+            child: Hero(
+              tag: product.id!,
+              child: FadeInImage(
+                image: NetworkImage(product.imageUrl!),
+                placeholder: AssetImage("assets/images/loading.gif"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            footer: Container(
+              height: constraints.maxHeight * 0.4,
+              color: Colors.black87,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Consumer<Product>(
+                    builder: (ctx, product, _) => IconButton(
+                      icon: Icon(product.isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border),
+                      onPressed: () => product.toggleFavoriteStatus(
+                          authData.token, authData.userId),
+                      color: Theme.of(context).accentColor,
                     ),
                   ),
-                ),
-              ],
+                  Container(
+                    width: constraints.maxWidth * 0.42,
+                    child: Text(
+                      product.title!,
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      //  overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  Material(
+                    shape: CircleBorder(),
+                    //type: MaterialType.circle,
+                    clipBehavior: Clip.none,
+                    color: Colors.black87,
+                    child: Container(
+                      height: 45,
+                      width: 45,
+                      child: InkWell(
+                        customBorder: CircleBorder(),
+                        child: Icon(
+                          Icons.shopping_cart,
+                          color: Theme.of(context).accentColor,
+                        ),
+                        onTap: () => {
+                          // showModalBottomSheet(
+                          //     context: context,
+                          //     builder: (_) => AddToCartModalSheet(product.id!))
+                          Navigator.of(context).pushNamed(
+                              AddToCartScreen.routeName,
+                              arguments: product.id),
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

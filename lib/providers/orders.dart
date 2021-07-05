@@ -6,7 +6,7 @@ import './cart.dart';
 
 class OrderItem {
   final String? id;
-  final double? amount;
+  final double amount;
   final List<CartItem> products;
   final DateTime dateTime;
 
@@ -50,35 +50,26 @@ class Orders with ChangeNotifier {
                   .toList(),
             }))
         .then((response) {
-      _orders.insert(
-        0,
-        OrderItem(
-          id: json.decode(response.body)["name"],
-          amount: amount,
-          products: cartProducts,
-          dateTime: DateTime.now(),
-        ),
-      );
-      print("Order added");
-      print(_orders.toString());
       notifyListeners();
     });
   }
 
   Future<void> setAndFetchOrders() {
+    _orders = [];
+    List<OrderItem> newOrders = [];
     final url = Uri.parse(
         "https://flutter-shop-app-f1b23-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken");
     return http.get(url).then(
       (response) {
         final extractedData =
             json.decode(response.body) as Map<String, dynamic>?;
-        print(extractedData);
         if (extractedData == null) return null;
         extractedData.forEach(
           (orderId, orderData) {
-            if (_orders.indexWhere((element) => element.id == orderId) >= 0)
-              return;
-            _orders.add(
+            print(orderData["products"]);
+
+            newOrders.insert(
+              0,
               OrderItem(
                   id: orderId,
                   amount: orderData["amount"],
@@ -86,7 +77,7 @@ class Orders with ChangeNotifier {
                   products: (orderData["products"] as List<dynamic>)
                       .map(
                         (e) => CartItem(
-                          id: e["id"],
+                          id: e["id"]! as String,
                           price: e["price"],
                           quantity: e["quantity"],
                           title: e["title"],
@@ -96,7 +87,7 @@ class Orders with ChangeNotifier {
             );
           },
         );
-        _orders = _orders.reversed.toList();
+        _orders = newOrders;
         notifyListeners();
       },
     );

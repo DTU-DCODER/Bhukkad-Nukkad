@@ -13,6 +13,7 @@ class ProductsGrid extends StatelessWidget {
     final products = showFavs ? productsData.favoriteItems : productsData.items;
 
     return GridView.builder(
+      physics: ClampingScrollPhysics(),
       padding: const EdgeInsets.all(10),
       itemCount: products.length,
       itemBuilder: (ctx, index) {
@@ -26,7 +27,7 @@ class ProductsGrid extends StatelessWidget {
         childAspectRatio: 3 / 2,
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
-        maxCrossAxisExtent: 200,
+        maxCrossAxisExtent: 250,
       ),
     );
   }
