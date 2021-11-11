@@ -46,62 +46,70 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     final screenHeight =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("My Shop"),
-        actions: <Widget>[
-          Consumer<Cart>(
-            builder: (_, cart, __) => Badge(
-              IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(CartScreen.routeName),
-              ),
-              cart.itemCount.toString(),
-            ),
-          ),
-          PopupMenuButton(
-            onSelected: (dynamic selectedValue) {
-              setState(() {
-                if (selectedValue == FilterOptions.Favorites) {
-                  _showOnlyFavorites = true;
-                } else
-                  _showOnlyFavorites = false;
-              });
-            },
-            icon: Icon(Icons.more_vert),
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                child: Text("Only Favorites"),
-                value: FilterOptions.Favorites,
-              ),
-              PopupMenuItem(
-                child: Text("Show All"),
-                value: FilterOptions.All,
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      "Shop Now",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline1!
-                          .copyWith(fontSize: screenHeight * 0.05),
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: Text("My Shop"),
+              pinned: true,
+              actions: <Widget>[
+                Consumer<Cart>(
+                  builder: (_, cart, __) => Badge(
+                    IconButton(
+                      icon: Icon(Icons.shopping_cart),
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed(CartScreen.routeName),
                     ),
+                    cart.itemCount.toString(),
                   ),
                 ),
-                Expanded(child: ProductsGrid(_showOnlyFavorites)),
+                PopupMenuButton(
+                  onSelected: (dynamic selectedValue) {
+                    setState(() {
+                      if (selectedValue == FilterOptions.Favorites) {
+                        _showOnlyFavorites = true;
+                      } else
+                        _showOnlyFavorites = false;
+                    });
+                  },
+                  icon: Icon(Icons.more_vert),
+                  itemBuilder: (_) => [
+                    PopupMenuItem(
+                      child: Text("Only Favorites"),
+                      value: FilterOptions.Favorites,
+                    ),
+                    PopupMenuItem(
+                      child: Text("Show All"),
+                      value: FilterOptions.All,
+                    ),
+                  ],
+                ),
               ],
             ),
+            _isLoading
+                ? SliverFillRemaining(
+                    child: Center(
+                    child: CircularProgressIndicator(),
+                  ))
+                : SliverToBoxAdapter(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          "Shop Now",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1!
+                              .copyWith(fontSize: screenHeight * 0.05),
+                        ),
+                      ),
+                    ),
+                  ),
+            if (!_isLoading) ProductsGrid(_showOnlyFavorites),
+          ],
+        ),
+      ),
       drawer: AppDrawer(),
     );
   }

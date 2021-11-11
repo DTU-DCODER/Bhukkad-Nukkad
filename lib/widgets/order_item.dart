@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shop_app/screens/add_to_cart_screen.dart';
 
 import '../providers/orders.dart' as ord;
 
@@ -45,31 +46,37 @@ class _OrderItemState extends State<OrderItem> {
                 physics: NeverScrollableScrollPhysics(),
                 children: widget.order.products
                     .map(
-                      (prod) => Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              prod.title!,
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                              //softWrap: true,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              "${prod.quantity}x ₹${prod.price}",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[700],
+                      (prod) => InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              AddToCartScreen.routeName,
+                              arguments: prod.id);
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                prod.title!,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                //softWrap: true,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                          ),
-                        ],
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                "${prod.quantity}x ₹${prod.price}",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[700],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                     .toList(),

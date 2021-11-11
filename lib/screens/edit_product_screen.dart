@@ -178,6 +178,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           return null;
                         },
                       ),
+                      const SizedBox(height: 16),
                       TextFormField(
                         initialValue: newProduct.price != 0
                             ? newProduct.price.toString()
@@ -202,6 +203,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           return null;
                         },
                       ),
+                      const SizedBox(height: 16),
                       TextFormField(
                         initialValue: newProduct.description,
                         maxLines: 3,
@@ -220,6 +222,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           return null;
                         },
                       ),
+                      const SizedBox(height: 16),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[

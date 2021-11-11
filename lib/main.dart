@@ -56,10 +56,32 @@ class MyApp extends StatelessWidget {
           title: "My Shop",
           //scrollBehavior: CupertinoScrollBehavior(),
           theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              centerTitle: true,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              titleTextStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700),
+              iconTheme: const IconThemeData(color: Colors.black, size: 40),
+            ),
             primarySwatch: Colors.blue,
             accentColor: Colors.cyan[200],
             primaryColor: Colors.cyan,
             fontFamily: "Lato",
+            inputDecorationTheme: InputDecorationTheme(
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(40),
+                borderSide: BorderSide(color: Colors.black),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(color: Colors.blue[800]!),
+              ),
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+            ),
             // pageTransitionsTheme: PageTransitionsTheme(
             //   builders: {
             //     TargetPlatform.android: CupertinoPageTransitionsBuilder(),

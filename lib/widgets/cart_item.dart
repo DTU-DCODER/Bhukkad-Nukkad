@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/screens/add_to_cart_screen.dart';
 
 import '../providers/cart.dart';
 
@@ -57,22 +58,28 @@ class CartItem extends StatelessWidget {
           horizontal: 15,
           vertical: 4,
         ),
-        child: Padding(
-          padding: EdgeInsets.all(12),
-          child: ListTile(
-            leading: CircleAvatar(
-              minRadius: 25,
-              maxRadius: 36,
-              child: FittedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text("₹$price"),
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context)
+                .pushNamed(AddToCartScreen.routeName, arguments: id);
+          },
+          child: Padding(
+            padding: EdgeInsets.all(12),
+            child: ListTile(
+              leading: CircleAvatar(
+                minRadius: 25,
+                maxRadius: 36,
+                child: FittedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text("₹$price"),
+                  ),
                 ),
               ),
+              title: Text(title!),
+              subtitle: Text("₹${price! * quantity!}"),
+              trailing: Text(quantity.toString() + "x"),
             ),
-            title: Text(title!),
-            subtitle: Text("₹${price! * quantity!}"),
-            trailing: Text(quantity.toString() + "x"),
           ),
         ),
       ),
